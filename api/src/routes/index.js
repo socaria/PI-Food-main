@@ -3,13 +3,13 @@ const { Router } = require('express');
 // Ejemplo: const authRouter = require('./auth.js');
 const axios = require('axios');
 const { Recipe, Diet } = require("../db");
-// const { YOUR_API_KEY } = process.env;
+const { YOUR_API_KEY } = process.env;
 const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 const getApiInfo = async () => {
-    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=bd985e8724ec4f8cbf1fb32f82f02737&addRecipeInformation=true`);
+    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true`);
     const apiInfo = await apiUrl.data.results
     .map(e => {
         return {
@@ -17,11 +17,13 @@ const getApiInfo = async () => {
             id: e.id, 
             summary: e.summary,
             healthScore: e.healthScore,
-            instructions: e.analyzedInstructions.map(a => {return a.steps}),
+            instructions: e.analyzedInstructions.map(a => {
+                return a.steps.map(as => {
+                    return `Paso ${as.number}: ${as.step}.`})}).toString(),
             createdInDb: false,
+            diets: e.diets.map(d => {return d})
         };
     });
-    console.log(apiInfo[0]);
     return apiInfo;
 };
 
@@ -44,11 +46,13 @@ const getAllRecipes = async () => {
     return infoConcat;
 }
 
+
+
 router.get('/recipes', async (req, res) => {
     const { title } = req.query;
     let recipesTotal = await getAllRecipes();
     if (title) {
-        let recipeTitle = await recipeTitle.filter( 
+        let recipeTitle = await recipesTotal.filter( 
             r => r.title.toLowerCase().includes(title.toLowerCase()));
         recipeTitle.length ? 
         res.status(200).send(recipeTitle) :
@@ -56,6 +60,50 @@ router.get('/recipes', async (req, res) => {
     }else{
         res.status(200).send(recipesTotal);
     }
+});
+
+router.get('/diets', async (req, res) => {
+    const recipesTotal = await getAllRecipes();
+    const dietsTotal = recipesTotal.map( rt => {
+        return rt.diets});
+    const dietsA = dietsTotal.map(dt => { 
+                dt.map(d => {
+                    Diet.findOrCreate({
+                        where: { name: d }
+                    })
+            }); 
+             return dt;
+    });
+    const allDiets = await Diet.findAll();
+    res.send(allDiets);
 })
 
+router.post('/recipes', async (req, res) => {
+    let {
+        title,
+        summary,
+        healthScore,
+        instructions,
+        createdInDb,
+        diets
+     } = req.body;
+    try{
+        let newRecipe = await Recipe.create({
+            title,
+            summary,
+            healthScore,
+            instructions,
+            createdInDb,
+        })
+    
+        let dietDb = await Diet.findAll({
+            where: { name: diets}
+        })
+        newRecipe.addDiet(dietDb);
+        res.send('Receta creada con éxitos');
+    }catch(e){ 
+        // TODO: enviar mensaje de error
+        res.status(500).send(`ERROR: ${e}`) 
+    }
+})
 module.exports = router;
