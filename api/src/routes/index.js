@@ -21,7 +21,9 @@ const getApiInfo = async () => {
                 return a.steps.map(as => {
                     return `Paso ${as.number}: ${as.step}.`})}).toString(),
             createdInDb: false,
-            diets: e.diets.map(d => {return d})
+            diets: e.diets.map(d => {return d}),
+            image: e.image,
+            dishTypes: e.dishTypes
         };
     });
     return apiInfo;
@@ -46,6 +48,16 @@ const getAllRecipes = async () => {
     return infoConcat;
 }
 
+router.get('/recipes/:id', async (req, res) => {
+    const { id } = req.params;
+    let recipesTotal = await getAllRecipes();
+    let recipeId = await recipesTotal.filter(r => r.id == id)
+    if(recipeId.length !== 0) {
+        res.status(200).send(recipeId);
+    }else{
+        res.status(404).send('No existen recetas con ese Id');
+    }
+});
 
 
 router.get('/recipes', async (req, res) => {
