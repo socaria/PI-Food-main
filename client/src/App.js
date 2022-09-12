@@ -4,14 +4,12 @@ import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import CreateRecipe from './components/CreateRecipe';
 import RecipeDetail from './components/RecipeDetail';
-import SearchBar from './components/SearchBar';
 
 function App() {
   return (
 
     <div>
       <Switch>
-        <SearchBar/>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/home" component={Home} />
         <Route path="/recipes/create" component={CreateRecipe} />

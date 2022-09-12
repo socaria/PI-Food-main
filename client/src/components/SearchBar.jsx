@@ -9,7 +9,7 @@ export default function SearchBar() {
                     <input type='text' placeholder="buscar..." />
                     <button>Buscar</button>
                 </div>
-                <NavLink exact to="/" >Home</NavLink>
+                <NavLink exact to="/" >Volver al inicio</NavLink>
                 <br></br>
                 <NavLink to="/recipes/create">Crear receta</NavLink>
             </nav>

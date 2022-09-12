@@ -17,6 +17,7 @@ export function getRecipeDetail(id) {
     return async function(dispatch) {
         const res = await fetch(`http://localhost:3001/recipes/${id}`);
         const obj = await res.json();
+       
         return dispatch({
             type: GET_RECIPE_DETAIL,
             payload: obj

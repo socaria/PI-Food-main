@@ -14,7 +14,7 @@ const RecipeCard = (props) => {
       <p>Tipo de dieta: 
       <ul>{props.diets?.map(d => {
         return( 
-          <li ket={props.id}>{d}</li>)
+          <li key={d}>{d}</li>)
           })}
       </ul>
       </p>

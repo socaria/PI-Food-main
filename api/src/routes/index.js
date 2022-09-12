@@ -6,6 +6,8 @@ const { Recipe, Diet } = require("../db");
 const { YOUR_API_KEY } = process.env;
 const router = Router();
 
+
+
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 const getApiInfo = async () => {
@@ -53,14 +55,13 @@ const getAllRecipes = async () => {
 router.get('/recipes/:id', async (req, res) => {
     const { id } = req.params;
     let recipesTotal = await getAllRecipes();
-    let recipeId = await recipesTotal.filter(r => r.id == id)
+    let recipeId = await recipesTotal.filter(r => r.id == id)?.[0]
     if (recipeId.length !== 0) {
         res.status(200).send(recipeId);
     } else {
         res.status(404).send('No existen recetas con ese Id');
     }
 });
-
 
 router.get('/recipes', async (req, res) => {
     const { title } = req.query;

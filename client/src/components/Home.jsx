@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRecipes } from '../actions';
 import { Link } from 'react-router-dom';
 import RecipeCard from "./RecipeCard";
+import SearchBar from "./SearchBar";
 
 export default function Home() {
 
@@ -21,7 +22,7 @@ export default function Home() {
     }
     return (
         <div>
-            <Link to='/recipes'>Crear receta</Link>
+            <SearchBar/>
             <h1>RECETAS</h1>
             <button onClick={e => handleClick(e)}>
                 Volver a cargar recetas
@@ -58,6 +59,8 @@ export default function Home() {
                             title={r.title}
                             image={r.image}
                             diets={r.diets}
+                            id={r.id}
+                            key={r.id}
                         />)
                     })
                 }
