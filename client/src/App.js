@@ -1,10 +1,24 @@
 import './App.css';
+import { Route, Switch } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
+import Home from './components/Home';
+import CreateRecipe from './components/CreateRecipe';
+import RecipeDetail from './components/RecipeDetail';
+import SearchBar from './components/SearchBar';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Food</h1>
+
+    <div>
+      <Switch>
+        <SearchBar/>
+        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/home" component={Home} />
+        <Route path="/recipes/create" component={CreateRecipe} />
+        <Route path="/recipes/:id" component={RecipeDetail} />
+      </Switch>
     </div>
+
   );
 }
 
