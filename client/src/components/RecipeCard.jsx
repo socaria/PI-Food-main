@@ -11,13 +11,13 @@ const RecipeCard = (props) => {
           {props.title}
         </Link>
       </h3>
-      <p>Tipo de dieta: 
+      <div><p>Tipo de dieta:</p> 
       <ul>{props.diets?.map(d => {
         return( 
           <li key={d}>{d}</li>)
           })}
       </ul>
-      </p>
+      </div>
       
 
     </div>

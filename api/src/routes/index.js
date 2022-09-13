@@ -5,14 +5,17 @@ const axios = require('axios');
 const { Recipe, Diet } = require("../db");
 const { YOUR_API_KEY } = process.env;
 const router = Router();
+const mockJSON = require('../../mock/search.json');
 
 
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 const getApiInfo = async () => {
-    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true`);
-    const apiInfo = await apiUrl.data.results
+
+    // const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true&number=100`);
+    // const apiInfo = await apiUrl.data.results
+    const apiInfo = mockJSON.results
         .map(e => {
             return {
                 title: e.title,
