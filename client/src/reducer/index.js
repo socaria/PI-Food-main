@@ -32,9 +32,7 @@ function rootReducer(state = initialState, action) {
             }
         case CREATE_RECIPE:
             return {
-                ...state,
-                recipes: [...state.recipes, action.payload],
-                allRecipes: [...state.recipes, action.payload]
+                ...state
             }
         case GET_DIETS:
             return {
@@ -49,57 +47,35 @@ function rootReducer(state = initialState, action) {
                 recipes: recipesFiltered
             }
         case SORT_BY_TITLE:
-            let sortedRecipesT = action.payload === 'titleAsc' ?
+            let sortedRecipesT =
                 state.recipes.sort(function (a, b) {
                     if (a.title > b.title) {
-                        return 1;
-                    }
-                    if (b.title > a.title) {
-                        return -1;
-                    }
-                    return 0;
-
-
-                })
-                : state.recipes.sort(function (a, b) {
-                    if (a.title > b.title) {
+                        if (action.payload === 'titleAsc') return 1;
                         return -1;
                     }
                     if (b.title > a.title) {
+                        if (action.payload === 'titleAsc') return -1;
                         return 1;
                     }
                     return 0;
-
-
                 })
-                return {
-                    ...state,
-                    recipes: sortedRecipesT
-                }
+            return {
+                ...state,
+                recipes: sortedRecipesT
+            }
         case SORT_BY_HEALTH_SCORE:
-            let sortedRecipesHS = action.payload === 'healthScoreAsc' ?
-            state.recipes.sort(function (a, b) {
-                if (a.healthScore > b.healthScore) {
-                    return 1;
-                }
-                if (b.healthScore > a.healthScore) {
-                    return -1;
-                }
-                return 0;
-
-
-            })
-            : state.recipes.sort(function (a, b) {
-                if (a.healthScore > b.healthScore) {
-                    return -1;
-                }
-                if (b.healthScore > a.healthScore) {
-                    return 1;
-                }
-                return 0;
-
-
-            })
+            let sortedRecipesHS =
+                state.recipes.sort(function (a, b) {
+                    if (a.healthScore > b.healthScore) {
+                        if (action.payload === 'healthScoreAsc') return 1;
+                        return -1;
+                    }
+                    if (b.healthScore > a.healthScore) {
+                        if (action.payload === 'healthScoreAsc') return -1;
+                        return 1;
+                    }
+                    return 0;
+                })
             return {
                 ...state,
                 recipes: sortedRecipesHS

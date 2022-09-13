@@ -2,19 +2,15 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getRecipes, sortByHealthScore, sortByTitle, filterByDiet, getDiets } from '../actions';
-import { Link } from 'react-router-dom';
 import RecipeCard from "./RecipeCard";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
 
 
-//TODO dar funcionalidad a filtros y botones de ordenamiento
-//TODO paginado
 export default function Home() {
 
     const dispatch = useDispatch();
     const allRecipes = useSelector((state) => state.recipes);
-    console.log("🚀 ~ file: Home.jsx ~ line 17 ~ Home ~ allRecipes", allRecipes)
     const allDiets = useSelector((state) => state.diets);
     const [currentPage, setCurrentPage] = useState(1);
     const [recipesPerPage, setRecipesPerPage] = useState(9);
@@ -81,7 +77,7 @@ export default function Home() {
                         Nivel de comida saludable (🡻)
                     </option>
                 </select>
-                //TODO filtrar por más de un valor
+                {/* TODO filtrar por más de un valor */}
                 <select onChange={(e) => handleFilterByDiet(e) }>
                       <option value='All'>Todas</option>
                     {
@@ -103,7 +99,7 @@ export default function Home() {
                             return (
                                 <RecipeCard
                                     title={r.title}
-                                    image={r.image}
+                                    image={r.image? r.image : <img src='https://www.prensalibre.com/wp-content/uploads/2020/01/shutterstock_154805255.jpg?resize=760,430'/>}
                                     diets={r.diets}
                                     id={r.id}
                                     key={r.id}

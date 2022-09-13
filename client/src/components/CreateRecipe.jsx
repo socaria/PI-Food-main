@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { createRecipe } from '../actions';
-import { useDispatch } from 'react-redux';
+import { createRecipe, getDiets } from '../actions';
+import { useDispatch, useSelector } from 'react-redux';
 
+//TODO validaciones de formulario HTML y JS
 export default function CreateRecipe() {
+    const dispatch = useDispatch();
+    const allDiets = useSelector((state) => state.diets);
     let [input, setInput] = React.useState({
         title: '',
         summary: '',
@@ -12,11 +15,15 @@ export default function CreateRecipe() {
         diets: []
     });
 
+    useEffect(() => {
+        dispatch(getDiets());
+    }, []);
+
     let handleChange = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value })
     };
 
-    let dispatch = useDispatch()
+
 
     let handleSubmit = (e) => {
         e.preventDefault();
@@ -32,17 +39,38 @@ export default function CreateRecipe() {
 
     return (
         <div>
+            <Link to={'/home'}>Volver</Link>
+            <h1>Crea tu receta</h1>
             <form onSubmit={(e) => handleSubmit(e)}>
-                <label>Nombre de receta: </label>
-                <input type={'text'} name={'title'} value={input.title} onChange={(e) => handleChange(e)} />
-                <label>Resumen: </label>
-                <textarea name={'summary'} value={input.summary} onChange={(e) => handleChange(e)} />
-                <label>Nivel de comida saludable: </label>
-                <input type={'number'} name={'healthScore'} value={input.healthScore} onChange={(e) => handleChange(e)} /> 
-                <label>Instrucciones: </label>
-                <textarea name={'instructions'} value={input.instructions} onChange={(e) => handleChange(e)} />
-                {/* <label>Tipos de dietas: </label>
-                <option name={'diets'} value={input.diets} onChange={(e) => handleChange(e)} /> */}
+                <div>
+                    <label>Nombre de receta: </label>
+                    <input type={'text'} name={'title'} value={input.title} onChange={(e) => handleChange(e)} />
+                </div>
+
+                <div>
+                    <label>Resumen: </label>
+                    <textarea name={'summary'} value={input.summary} onChange={(e) => handleChange(e)} />
+                </div>
+                <div>
+                    <label>Nivel de comida saludable: </label>
+                    <input type={'number'} name={'healthScore'} value={input.healthScore} onChange={(e) => handleChange(e)} />
+                </div>
+                <div>
+                    <label>Instrucciones: </label>
+                    <textarea name={'instructions'} value={input.instructions} onChange={(e) => handleChange(e)} />
+                </div>
+                <div>
+                    <label>Tipos de dietas: </label>
+                    {
+                        allDiets?.map(d => {
+                            return (
+                                <label key={d.name}>{d.name}
+                                    <input type='checkbox' name={d.name} value={d.name} />
+                                </label>
+                            )
+                        })
+                    }
+                </div>
                 <button type="submit">Crear receta</button>
             </form>
         </div>

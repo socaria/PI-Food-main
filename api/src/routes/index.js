@@ -85,14 +85,15 @@ router.get('/diets', async (req, res) => {
     const recipesTotal = await getAllRecipes();
     const dietsTotal = recipesTotal.map(rt => {
         return rt.diets
-    });
-    const dietsA = dietsTotal.map(dt => {
-        dt.map(d => {
-            Diet.findOrCreate({
-                where: { name: d }
-            })
-        });
-        return dt;
+    }).flat();
+    const dietsSet = new Set(dietsTotal);
+    const dietArr = [...dietsSet];
+    console.log("🚀 ~ file: index.js ~ line 91 ~ router.get ~ dietArr", dietArr)
+    dietArr.map(d => {
+        Diet.findOrCreate({
+            where: { name: d }
+        })
+        return d;
     });
     const allDiets = await Diet.findAll();
     res.send(allDiets);
