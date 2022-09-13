@@ -1,7 +1,9 @@
 import React from "react";
 import { getRecipeDetail } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
-
+import { Link } from 'react-router-dom'
+//TODO renderizar tipo de dieta de lo que proviene de base de datos
+//TODO agregar ingredientes
 const RecipeDetail = (props) => {
     const dispatch = useDispatch();
     React.useEffect(() => {
@@ -20,7 +22,7 @@ const RecipeDetail = (props) => {
 //TODO ver paso a paso y resumen, opciones de renderizado con html
     return (
         <div>
-            <h2>Nombre: {recipeDetail?.title}</h2>
+            <h2>{recipeDetail?.title}</h2>
             <img src={recipeDetail?.image} alt='Img not found' />
             <h4>Resumen: {recipeDetail?.summary}</h4>
             <h4>Paso a paso: {recipeDetail?.instructions}</h4>
@@ -33,6 +35,7 @@ const RecipeDetail = (props) => {
                 })}
             </ul>
             <h4>Tipo de plato: {recipeDetail?.dishTypes}</h4>
+            <Link to='/home'>Volver</Link>
         </div>
     );
 };

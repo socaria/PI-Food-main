@@ -50,36 +50,36 @@ export default function Home() {
         setCurrentPage(1);
         setSort(`Ordered by ${e.target.value}`)
     }
-    
+
 
     return (
         <div>
             <SearchBar />
-            
+
             <h1>RECETAS</h1>
             <button onClick={e => handleClick(e)}>
                 Volver a cargar recetas
             </button>
             <div>
-                <select onChange={(e) => handleSortByTitle(e) }>
+                <select onChange={(e) => handleSortByTitle(e)}>
                     <option value='titleAsc'>
-                        Nombre de receta (A-Z)
+                        Ordenar por nombre (A-Z)
                     </option>
                     <option value='titleDesc'>
-                        Nombre de receta (Z-A)
+                        Ordenar por nombre (Z-A)
                     </option>
                 </select>
-                <select onChange={(e) => handleSortByHealthScore(e) }>
+                <select onChange={(e) => handleSortByHealthScore(e)}>
                     <option value='healthScoreAsc'>
-                        Nivel de comida saludable (🡹)
+                        Ordenar por comida saludable (🡹)
                     </option>
                     <option value='healthScoreDesc'>
-                        Nivel de comida saludable (🡻)
+                        Ordenar por comida saludable (🡻)
                     </option>
                 </select>
                 {/* TODO filtrar por más de un valor */}
-                <select onChange={(e) => handleFilterByDiet(e) }>
-                      <option value='All'>Todas</option>
+                <select onChange={(e) => handleFilterByDiet(e)}>
+                    <option value='All'>Todas</option>
                     {
                         allDiets?.map(d => {
                             return (
@@ -88,7 +88,7 @@ export default function Home() {
                         })
                     }
                 </select>
-                <Pagination 
+                <Pagination
                     recipesPerPage={recipesPerPage}
                     allRecipes={allRecipes.length}
                     pagination={pagination}
@@ -99,7 +99,7 @@ export default function Home() {
                             return (
                                 <RecipeCard
                                     title={r.title}
-                                    image={r.image? r.image : <img src='https://www.prensalibre.com/wp-content/uploads/2020/01/shutterstock_154805255.jpg?resize=760,430'/>}
+                                    image={r.image ? r.image : <img src='https://www.prensalibre.com/wp-content/uploads/2020/01/shutterstock_154805255.jpg?resize=760,430' />}
                                     diets={r.diets}
                                     id={r.id}
                                     key={r.id}
