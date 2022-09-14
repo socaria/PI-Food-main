@@ -11,32 +11,43 @@ export default function CreateRecipe() {
         title: '',
         summary: '',
         healthScore: 0,
-        instructions: '',
+        instructions: [],
         diets: []
     });
+    console.log("🚀 ~ file: CreateRecipe.jsx ~ line 17 ~ CreateRecipe ~ input", input)
 
     useEffect(() => {
         dispatch(getDiets());
     }, []);
 
-    let handleChange = (e) => {
-        setInput({ ...input, [e.target.name]: e.target.value })
+    const handleChange = (e) => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        })
     };
+    
+    const handleCheck = (e) => {
+            setInput({
+                ...input,
+                diets: [...input.diets, e.target.value]
+            })
+    }
 
 
 
-    let handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(createRecipe(input));
         setInput({
             title: '',
             summary: '',
             healthScore: 0,
-            instructions: '',
+            instructions: [],
             diets: []
         })
     };
-
+// TODO agregar bien los pasos de las instructions
     return (
         <div>
             <Link to={'/home'}>Volver</Link>
@@ -57,15 +68,23 @@ export default function CreateRecipe() {
                 </div>
                 <div>
                     <label>Instrucciones: </label>
+                    <label>Paso n° 1</label>
                     <textarea name={'instructions'} value={input.instructions} onChange={(e) => handleChange(e)} />
                 </div>
                 <div>
                     <label>Tipos de dietas: </label>
+                    <br></br>
                     {
                         allDiets?.map(d => {
                             return (
                                 <label key={d.name}>{d.name}
-                                    <input type='checkbox' name={d.name} value={d.name} />
+                                    <input
+                                        type='checkbox'
+                                        name={d.name}
+                                        value={d.name}
+                                        onChange={e => handleCheck(e)}
+                                    />
+                                    <br></br>
                                 </label>
                             )
                         })

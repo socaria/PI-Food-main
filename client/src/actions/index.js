@@ -16,9 +16,13 @@ export function getRecipes(title) {
         url += `?title=${title}`
     }
     return async function (dispatch) {
+       try{
         const response = await fetch(url);
         const json = await response.json();
         dispatch({ type: GET_RECIPES, payload: json });
+       }catch(e){
+        console.log('ERROR', e);
+       }
     }
 }
 
@@ -36,11 +40,11 @@ export function getRecipeDetail(id) {
     }
 }
 
-//TODO agregar imput de dietas
+
 export function createRecipe(input) {
-    return async function (dispatch) {
-        const res = await axios.post(`http://localhost:3001/recipes`,input);
-        return res;
+    return async function () {
+        const resRecipe = await axios.post(`http://localhost:3001/recipes`, input);
+        return resRecipe;
     }
 }
 

@@ -24,14 +24,15 @@ const getApiInfo = async () => {
                 healthScore: e.healthScore,
                 instructions: e.analyzedInstructions.map(a => {
                     return a.steps.map(as => {
-                        return `Paso ${as.number}: ${as.step}.`
+                        return {step: as.number,  
+                        description: as.step}
                     })
-                }).toString(),
+                }),
                 createdInDb: false,
-                diets: e.diets.map(d => { return d }),
+                diets: e.diets.map(d => { return {name: d} }),
                 image: e.image,
                 dishTypes: e.dishTypes
-            };
+            }; 
         });
     return apiInfo;
 };
@@ -68,34 +69,36 @@ router.get('/recipes/:id', async (req, res) => {
 
 router.get('/recipes', async (req, res) => {
     const { title } = req.query;
-    let recipesTotal = await getAllRecipes();
-    if (title) {
-        let recipeTitle = await recipesTotal.filter(
-            r => r.title.toLowerCase().includes(title.toLowerCase()));
+    try {
+        let recipesTotal = await getAllRecipes();
+        if (title) {
+            let recipeTitle = await recipesTotal.filter(
+                r => r.title.toLowerCase().includes(title.toLowerCase()));
 
-        recipeTitle.length
-            ? res.status(200).send(recipeTitle)
-            : res.status(404).send('No existen recetas con ese nombre');
-    } else {
-        res.status(200).send(recipesTotal);
+            recipeTitle.length
+                ? res.status(200).send(recipeTitle)
+                : res.status(404).send('No existen recetas con ese nombre');
+        } else {
+            res.status(200).send(recipesTotal);
+        }
+    } catch(e) {
+        console.log('ERRORRRRRRRRRRRRRRRRRRRRRRRR:', e);
     }
 });
 
 router.get('/diets', async (req, res) => {
     const recipesTotal = await getAllRecipes();
+    
     const dietsTotal = recipesTotal.map(rt => {
         return rt.diets
-    }).flat();
-    const dietsSet = new Set(dietsTotal);
-    const dietArr = [...dietsSet];
-    console.log("🚀 ~ file: index.js ~ line 91 ~ router.get ~ dietArr", dietArr)
-    dietArr.map(d => {
+    }).flat();    
+    dietsTotal.forEach(d => {
         Diet.findOrCreate({
-            where: { name: d }
+            where: { name: d.name }
         })
-        return d;
     });
     const allDiets = await Diet.findAll();
+    console.log("🚀 ~ file: index.js ~ line 100 ~ router.get ~ allDiets", allDiets)
     res.send(allDiets);
 })
 
@@ -108,6 +111,7 @@ router.post('/recipes', async (req, res) => {
         createdInDb,
         diets
     } = req.body;
+    console.log("🚀 ~ file: index.js ~ line 112 ~ router.post ~ diets", diets)
     try {
         let newRecipe = await Recipe.create({
             title,
@@ -120,8 +124,9 @@ router.post('/recipes', async (req, res) => {
         let dietDb = await Diet.findAll({
             where: { name: diets }
         })
-        newRecipe.addDiet(dietDb);
-        res.send('Receta creada con éxitos');
+        newRecipe.addDiets(dietDb);
+        res.send('Receta creada con éxito');
+
     } catch (e) {
         // TODO: enviar mensaje de error
         res.status(500).send(`ERROR: ${e}`)

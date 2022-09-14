@@ -71,7 +71,7 @@ export default function Home() {
                 </select>
                 <select onChange={(e) => handleSortByHealthScore(e)}>
                     <option value='healthScoreAsc'>
-                        Ordenar por comida saludable (🡹)
+                        Ordenar por comida saludable (  )
                     </option>
                     <option value='healthScoreDesc'>
                         Ordenar por comida saludable (🡻)
@@ -99,7 +99,7 @@ export default function Home() {
                             return (
                                 <RecipeCard
                                     title={r.title}
-                                    image={r.image ? r.image : <img src='https://www.prensalibre.com/wp-content/uploads/2020/01/shutterstock_154805255.jpg?resize=760,430' />}
+                                    image={r.image ? r.image : <img src='https://w7.pngwing.com/pngs/135/840/png-transparent-drawing-dish-%D0%BA%D0%B0%D1%81%D1%82%D1%80%D1%8E%D0%BB%D1%8F-food-photography-eating.png' />}
                                     diets={r.diets}
                                     id={r.id}
                                     key={r.id}

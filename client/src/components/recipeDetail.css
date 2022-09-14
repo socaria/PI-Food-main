@@ -1,0 +1,23 @@
+.fonts  {
+    letter-spacing: -.05em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+}
+
+.titleh2  {
+    font-size: 2.125rem;
+    line-height: 2.75rem;
+    letter-spacing: -.05em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+}
+
+.titleh3 {
+    font-size: 1.625rem;
+    line-height: 2.75rem;
+    letter-spacing: -.05em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+}
+
+.div {
+    width: 700px;
+    background-color:chocolate;
+}
