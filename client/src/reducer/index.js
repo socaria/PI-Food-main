@@ -1,9 +1,8 @@
-import { sortByHealthScore } from '../actions';
 import {
     GET_RECIPES,
     GET_RECIPE_DETAIL,
-    CREATE_RECIPE,
     GET_DIETS,
+    CREATE_RECIPE,
     FILTER_BY_DIET,
     SORT_BY_TITLE,
     SORT_BY_HEALTH_SCORE
@@ -41,7 +40,7 @@ function rootReducer(state = initialState, action) {
             }
         case FILTER_BY_DIET:
             const recipesFiltered = action.payload === 'All' ? state.allRecipes
-                : state.allRecipes.filter(r => r.diets.includes(action.payload));
+            : state.allRecipes.filter(r => r.diets.find((d) => (d.name === action.payload)))               
             return {
                 ...state,
                 recipes: recipesFiltered

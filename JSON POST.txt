@@ -1,0 +1,10 @@
+{
+    "title": "pollo", 
+"summary": "pollo", 
+"healthScore": 0, 
+"instructions": "pollo", 
+"diets": ["lacto ovo vegetarian", "paleolithic", "primal"]
+}
+
+paso: ${as.number},  
+                        description: ${as.step}

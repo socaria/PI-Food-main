@@ -5,6 +5,7 @@ import { getRecipes, sortByHealthScore, sortByTitle, filterByDiet, getDiets } fr
 import RecipeCard from "./RecipeCard";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
+import './home.css'
 
 
 export default function Home() {
@@ -93,7 +94,7 @@ export default function Home() {
                     allRecipes={allRecipes.length}
                     pagination={pagination}
                 />
-                <div>
+                <div className='card'>
                     {
                         currentRecipes?.map(r => {
                             return (
@@ -103,6 +104,7 @@ export default function Home() {
                                     diets={r.diets}
                                     id={r.id}
                                     key={r.id}
+                                    
                                 />)
                         })
                     }
@@ -111,4 +113,5 @@ export default function Home() {
 
         </div>
     )
+
 }

@@ -1,0 +1,41 @@
+.landing-page {
+  height: 100vh;
+  background-image: url("../image/03.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  font-size:larger ;
+  font-family: Verdana, Geneva, Tahoma, sans-serif; 
+
+}
+
+.landing-page__title {
+  margin: 0;
+  color: #e9a74c;
+  align-self: center;
+  justify-content: center;
+  display: flex;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+
+}
+
+
+.landing-page__text-div{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+}
+
+.landing-page__login-buttom {
+  background-color: blanchedalmond;
+  display: flex;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+}

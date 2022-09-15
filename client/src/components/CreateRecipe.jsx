@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { createRecipe, getDiets } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
+import './createRecipe.css'
 
 //TODO validaciones de formulario HTML y JS
 export default function CreateRecipe() {
@@ -14,7 +15,7 @@ export default function CreateRecipe() {
         instructions: [],
         diets: []
     });
-    console.log("🚀 ~ file: CreateRecipe.jsx ~ line 17 ~ CreateRecipe ~ input", input)
+   
 
     useEffect(() => {
         dispatch(getDiets());
@@ -51,34 +52,35 @@ export default function CreateRecipe() {
     return (
         <div>
             <Link to={'/home'}>Volver</Link>
-            <h1>Crea tu receta</h1>
+            <h1 className="h1">Crea tu receta</h1>
             <form onSubmit={(e) => handleSubmit(e)}>
-                <div>
-                    <label>Nombre de receta: </label>
-                    <input type={'text'} name={'title'} value={input.title} onChange={(e) => handleChange(e)} />
+                <div className="div">
+                    <label className="label" >Nombre de receta: </label>
+                    <input className='input' type={'text'} name={'title'} value={input.title} onChange={(e) => handleChange(e)} />
                 </div>
 
-                <div>
-                    <label>Resumen: </label>
-                    <textarea name={'summary'} value={input.summary} onChange={(e) => handleChange(e)} />
+                <div className="div">
+                    <label className="label">Resumen: </label>
+                    <textarea className='input' name={'summary'} value={input.summary} onChange={(e) => handleChange(e)} />
                 </div>
-                <div>
-                    <label>Nivel de comida saludable: </label>
-                    <input type={'number'} name={'healthScore'} value={input.healthScore} onChange={(e) => handleChange(e)} />
+                <div className="div">
+                    <label className="label">Nivel de comida saludable: </label>
+                    <input className='input' type={'number'} name={'healthScore'} value={input.healthScore} onChange={(e) => handleChange(e)} />
                 </div>
-                <div>
-                    <label>Instrucciones: </label>
-                    <label>Paso n° 1</label>
-                    <textarea name={'instructions'} value={input.instructions} onChange={(e) => handleChange(e)} />
+                <div className="div">
+                    <label className="label">Instrucciones: </label>
+                    <label className="label">Paso n° 1</label>
+                    <textarea className='input' name={'instructions'} value={input.instructions} onChange={(e) => handleChange(e)} />
                 </div>
-                <div>
-                    <label>Tipos de dietas: </label>
+                <div className="div">
+                    <label className="label">Tipos de dietas: </label>
                     <br></br>
                     {
                         allDiets?.map(d => {
                             return (
-                                <label key={d.name}>{d.name}
-                                    <input
+                                <label className="label" key={d.name}>{d.name}
+                                    <input 
+                                        className='input'
                                         type='checkbox'
                                         name={d.name}
                                         value={d.name}
