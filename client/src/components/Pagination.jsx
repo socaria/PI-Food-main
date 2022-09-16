@@ -7,10 +7,16 @@ export default function Pagination({ recipesPerPage, allRecipes, pagination }) {
         pageNumbers.push(i + 1)
     }
     return (
-        <nav>
+        <nav className="card">
             {
                 pageNumbers?.map(pageNumber => (
-                    <button key={pageNumber} onClick={() => pagination(pageNumber)}>{pageNumber}</button>
+                    <button 
+                    className="home-button"
+                    key={pageNumber} 
+                    onClick={() => pagination(pageNumber)}
+                    >
+                        {pageNumber}
+                    </button>
                 ))
             }
         </nav>

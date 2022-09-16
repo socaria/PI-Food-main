@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { getRecipes } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
+import './searchBar.css'
 
 export default function SearchBar() {
     const dispatch = useDispatch();
@@ -23,21 +24,30 @@ export default function SearchBar() {
         setInput('');
     }
     return (
-        <header className="navbar">
-            <nav>
-                <div>
-                    <input
-                        type='text'
-                        placeholder="¿Qué estás buscando?"
-                        onChange={e => handleInputChange(e)}
-                    />
-                    <button type={'submit'} onClick={e => handleSubmit(e)}>
-                        Buscar
-                    </button>
-                </div>
-                <NavLink exact to="/" >Volver al inicio</NavLink>
-                <br></br>
-                <NavLink to="/recipes/create">Crear receta</NavLink>
+        <header>
+            <nav className="search-bar__container">
+                    <div className="search-bar__search-place">
+                        <input
+                            className="search-bar__input"
+                            type='text'
+                            placeholder="¿Qué estás buscando?"
+                            onChange={e => handleInputChange(e)}
+                        />
+                        <button
+                            className="search-bar__search-button"
+                            type={'submit'}
+                            onClick={e => handleSubmit(e)}
+                        >
+                            Buscar
+                        </button>
+                    </div>
+                    <NavLink exact to="/" >
+                        <button className='search-bar__link-button'>Volver al inicio</button>
+                    </NavLink>
+                    <br></br>
+                    <NavLink to="/recipes/create">
+                        <button className='search-bar__link-button'>Crear receta</button>
+                    </NavLink>
             </nav>
         </header>
     )

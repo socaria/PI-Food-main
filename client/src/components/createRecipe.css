@@ -1,7 +1,26 @@
-.background {
-    background-image: url('https://www.freepik.es/foto-gratis/comida-ingredientes_6216943.htm#query=food&position=2&from_view=search')
+.create-recipe__background {
+
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    position: relative;
 }
-.h1 {
+
+.create-recipe__container {
+    margin: 0;
+    color: #e9a74c;
+    display: flex;
+    position: relative;
+    align-items: center;
+    top: 0%;
+    flex-direction: column;
+}
+
+
+.create-recipe__title {
+
     background-color: beige;
     width: 275px;
 }
@@ -10,10 +29,27 @@
     background-color: beige;
 }
 
-.label {
-    background-color: beige;
+.create-recipe__diets__container {
+    display: flex;
+    flex-direction: row;
 }
 
 .input {
     background-color: beige;
+}
+
+.create-recipe__button {
+    position: relative;
+    top: 70%;
+    display: block;
+    font-size: medium;
+    padding: 8px;
+    border-radius: 10px;
+    font-family: inherit;
+    background-color: rgba(233, 167, 76, 0.8);
+}
+
+.create-recipe__button:hover {
+    background-color: rgba(233, 167, 76, 1);
+    font-style: oblique;
 }

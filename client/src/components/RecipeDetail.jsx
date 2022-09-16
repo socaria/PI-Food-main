@@ -19,8 +19,6 @@ const RecipeDetail = (props) => {
         return state.recipeDetail
 
     })
-    console.log("🚀 ~ file: RecipeDetail.jsx ~ line 22 ~ recipeDetail ~ recipeDetail", recipeDetail)
-    //TODO ver paso a paso y resumen, opciones de renderizado con html
     return (
         <div>
             <h2 className="titleh2">{recipeDetail?.title}</h2>
@@ -32,11 +30,11 @@ const RecipeDetail = (props) => {
             <div className="div">
                 <h3 className="titleh3">Paso a paso:</h3>
                 <div>
-                    {recipeDetail?.instructions?.[0].map(i => {
+                    {recipeDetail?.instructions?.map((instruction, index) => {
                         return (
-                            <div key={i.description}>
-                                <h4>Paso n° {i.step}</h4>
-                                <p>{i.description}</p>
+                            <div key={instruction}>
+                                <h4>Paso n° {index + 1}</h4>
+                                <p>{instruction}</p>
                             </div>)
                     })}
                 </div>

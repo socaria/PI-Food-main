@@ -4,7 +4,7 @@ import { createRecipe, getDiets } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import './createRecipe.css'
 
-//TODO validaciones de formulario HTML y JS
+//TODO validaciones de formulario HTML y JS (ver en video)
 export default function CreateRecipe() {
     const dispatch = useDispatch();
     const allDiets = useSelector((state) => state.diets);
@@ -12,30 +12,48 @@ export default function CreateRecipe() {
         title: '',
         summary: '',
         healthScore: 0,
-        instructions: [],
+        instructions: [''],
         diets: []
     });
-   
+
 
     useEffect(() => {
         dispatch(getDiets());
     }, []);
 
     const handleChange = (e) => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        })
-    };
-    
-    const handleCheck = (e) => {
+        const aux = input.instructions;
+
+        if (e.target.name.includes("instructions")) {
+            aux[e.target.name.split("_")[1]] = e.target.value;
             setInput({
                 ...input,
-                diets: [...input.diets, e.target.value]
+                instructions: aux
             })
+        } else {
+            setInput({
+                ...input,
+                [e.target.name]: e.target.value
+            })
+        }
+
+    };
+
+
+    const handleCheck = (diet) => {
+        setInput({
+            ...input,
+            diets: [...input.diets, diet]
+        })
     }
 
-
+    const handleClickStep = (e) => {
+        e.preventDefault();
+        setInput({
+            ...input,
+            instructions: [...input.instructions, '']
+        })
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -48,52 +66,74 @@ export default function CreateRecipe() {
             diets: []
         })
     };
-// TODO agregar bien los pasos de las instructions
+    // TODO agregar bien los pasos de las instructions
     return (
-        <div>
-            <Link to={'/home'}>Volver</Link>
-            <h1 className="h1">Crea tu receta</h1>
-            <form onSubmit={(e) => handleSubmit(e)}>
-                <div className="div">
-                    <label className="label" >Nombre de receta: </label>
-                    <input className='input' type={'text'} name={'title'} value={input.title} onChange={(e) => handleChange(e)} />
-                </div>
-
-                <div className="div">
-                    <label className="label">Resumen: </label>
-                    <textarea className='input' name={'summary'} value={input.summary} onChange={(e) => handleChange(e)} />
-                </div>
-                <div className="div">
-                    <label className="label">Nivel de comida saludable: </label>
-                    <input className='input' type={'number'} name={'healthScore'} value={input.healthScore} onChange={(e) => handleChange(e)} />
-                </div>
-                <div className="div">
-                    <label className="label">Instrucciones: </label>
-                    <label className="label">Paso n° 1</label>
-                    <textarea className='input' name={'instructions'} value={input.instructions} onChange={(e) => handleChange(e)} />
-                </div>
-                <div className="div">
-                    <label className="label">Tipos de dietas: </label>
+        <div className="create-recipe__background">
+            <div className="create-recipe__container">
+                <Link to={'/home'}>Volver</Link>
+                <h1 className="create-recipe__title">Crea tu receta</h1>
+                <form onSubmit={(e) => handleSubmit(e)}>
+                    <div>
+                        <label className="label" >Nombre de receta: </label>
+                        <input className='input' type={'text'} name={'title'} value={input.title} onChange={(e) => handleChange(e)} />
+                    </div>
                     <br></br>
+                    <div>
+                        <label className="label">Resumen: </label>
+                        <textarea className='input' name={'summary'} value={input.summary} onChange={(e) => handleChange(e)} />
+                    </div>
+                    <br></br>
+                    <div>
+                        <label className="label">Nivel de comida saludable: </label>
+                        <input className='input' type={'number'} name={'healthScore'} value={input.healthScore} onChange={(e) => handleChange(e)} />
+                    </div>
+                    <br></br>
+                    <button onClick={e => handleClickStep(e)}>Agregar paso</button>
                     {
-                        allDiets?.map(d => {
-                            return (
-                                <label className="label" key={d.name}>{d.name}
-                                    <input 
-                                        className='input'
-                                        type='checkbox'
-                                        name={d.name}
-                                        value={d.name}
-                                        onChange={e => handleCheck(e)}
-                                    />
-                                    <br></br>
-                                </label>
-                            )
-                        })
+                        input.instructions?.map(
+                            (instruction, index) => {
+                                return (
+                                    <div key={instruction.step}>
+                                        <label className="label">Paso n° {index + 1}</label>
+                                        <textarea
+                                            className='input'
+                                            name={`instructions_${index}`}
+                                            value={input.instructions[index]}
+                                            onChange={(e) => handleChange(e)}
+                                        />
+                                    </div>
+                                )
+                            }
+                        )
+
                     }
-                </div>
-                <button type="submit">Crear receta</button>
-            </form>
+                    <br></br>
+                    <div className="create-recipe__diets__container">
+                        <label >Tipos de dietas: </label>
+                        <br></br>
+                        <div className="create-recipe__diets__container">
+                            {
+                                allDiets?.map(d => {
+                                    return (
+                                        <button
+                                            type='button'
+                                            className="create-recipe__button"
+                                            key={d.name}
+                                        
+                                            onChange={() => handleCheck(d.name)}
+                                        >
+                                            {d.name}
+                                        </button>
+                                    )
+                                })
+                            }
+                        </div>
+
+                    </div>
+                    <br></br>
+                    <button type="submit">Crear receta</button>
+                </form>
+            </div>
         </div>
     );
 }

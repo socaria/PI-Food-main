@@ -58,7 +58,10 @@ export default function Home() {
             <SearchBar />
 
             <h1>RECETAS</h1>
-            <button onClick={e => handleClick(e)}>
+            <button
+                className="home-button"
+                onClick={e => handleClick(e)}
+            >
                 Volver a cargar recetas
             </button>
             <div>
@@ -104,7 +107,7 @@ export default function Home() {
                                     diets={r.diets}
                                     id={r.id}
                                     key={r.id}
-                                    
+
                                 />)
                         })
                     }

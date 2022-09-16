@@ -1,12 +1,27 @@
-.card {
+.search-bar__container {
     display: flex;
     flex-direction: row;
 }
 
-.home-button {
+.search-bar_search-place {
+    position: relative;
+}
+
+
+.search-bar__input {
+    position: absolute;
+}
+
+.search-bar__search-button {
+    position: absolute;
+}
+
+.search-bar__link-button {
     position: relative;
     top: 70%;
     display: block;
+    margin-left: auto;
+    margin-right: auto;
     font-size: medium;
     padding: 8px;
     border-radius: 10px;
@@ -14,7 +29,7 @@
     background-color: rgba(233, 167, 76, 0.8);
 }
 
-.home-button:hover {
+.search-bar__link-button:hover {
     background-color: rgba(233, 167, 76, 1);
     font-style: oblique;
   }
