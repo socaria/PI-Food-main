@@ -6,7 +6,8 @@ const { Recipe, Diet } = require("../db");
 const { YOUR_API_KEY } = process.env;
 const router = Router();
 const mockJSON = require('../../mock/search.json');
-
+//TODO modularizar
+//TODO ver por qué las dietas a veces se duplican
 
 
 // Configurar los routers
@@ -24,10 +25,9 @@ const getApiInfo = async () => {
                 healthScore: e.healthScore,
                 instructions: e.analyzedInstructions.map(a => {
                     return a.steps.map(as => {
-                        return {step: as.number,  
-                        description: as.step}
+                        return as.step
                     })
-                }),
+                }).flat(),
                 createdInDb: false,
                 diets: e.diets.map(d => { return {name: d} }),
                 image: e.image,
