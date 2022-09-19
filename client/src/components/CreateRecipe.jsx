@@ -4,7 +4,28 @@ import { createRecipe, getDiets } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import './createRecipe.css'
 
-//TODO validaciones de formulario HTML y JS (ver en video)
+// TODO ver si es necesario realizar otra validación
+//TODO poner foto por defecto
+
+export const validate = (input) => {
+    let error = {};
+    if (!input.title) {
+        error.title = "El nombre de la receta es requerido"
+    } else if (!/^[a-zA-Z ,.]*$/.test(input.title)) {
+        error.title = "El nombre de la receta no puede contener carácteres especiales"
+    }
+    if (!input.summary) {
+        error.summary = "El resumen de la receta es requerido"
+    }
+    if (input.healthScore < 0 || input.healthScore > 100){
+        error.healthScore = "El nivel de comida saludable debe tener un valor entre 0 y 100"
+    }
+    // if (input.instructions)
+    // if (input.diets){
+
+    // }
+    return error;
+}
 export default function CreateRecipe() {
     const dispatch = useDispatch();
     const allDiets = useSelector((state) => state.diets);
@@ -15,6 +36,7 @@ export default function CreateRecipe() {
         instructions: [''],
         diets: []
     });
+    let [error, setError] = React.useState({});
 
 
     useEffect(() => {
@@ -37,14 +59,28 @@ export default function CreateRecipe() {
             })
         }
 
+        let objError = validate({ ...input, [e.target.name]: e.target.value });
+        console.log("🚀 ~ file: CreateRecipe.jsx ~ line 62 ~ handleChange ~ objError", objError)
+
+
+        setError(objError);
+
     };
 
-
-    const handleCheck = (diet) => {
-        setInput({
-            ...input,
-            diets: [...input.diets, diet]
-        })
+    const handleDiet = (diet) => {
+        if (!input.diets.includes(diet)) {
+            setInput({
+                ...input,
+                diets: [...input.diets, diet]
+            })
+            return true;
+        } else {
+            setInput({
+                ...input,
+                diets: input.diets.filter(d => d !== diet)
+            })
+            return false;
+        }
     }
 
     const handleClickStep = (e) => {
@@ -66,7 +102,9 @@ export default function CreateRecipe() {
             diets: []
         })
     };
-    // TODO agregar bien los pasos de las instructions
+
+
+
     return (
         <div className="create-recipe__background">
             <div className="create-recipe__container">
@@ -75,17 +113,34 @@ export default function CreateRecipe() {
                 <form onSubmit={(e) => handleSubmit(e)}>
                     <div>
                         <label className="label" >Nombre de receta: </label>
-                        <input className='input' type={'text'} name={'title'} value={input.title} onChange={(e) => handleChange(e)} />
+                        <input
+                            className={error?.title ? "create-recipe__input-error" : "create-recipe__input"}
+                            type={'text'}
+                            name={'title'}
+                            value={input.title}
+                            onChange={(e) => handleChange(e)}
+                        />
+                        {
+                            error.title && <p>{error.title}</p>
+                        }
                     </div>
                     <br></br>
                     <div>
-                        <label className="label">Resumen: </label>
+                        <label className={error?.summary ? "create-recipe__input-error" : "create-recipe__input"}>Resumen: </label>
                         <textarea className='input' name={'summary'} value={input.summary} onChange={(e) => handleChange(e)} />
+                        {
+                            error.summary && <p>{error.summary}</p>
+                        }
                     </div>
                     <br></br>
                     <div>
-                        <label className="label">Nivel de comida saludable: </label>
+                        <label className={error?.healthScore ? "create-recipe__input-error" : "create-recipe__input"}>
+                            Nivel de comida saludable: 
+                        </label>
                         <input className='input' type={'number'} name={'healthScore'} value={input.healthScore} onChange={(e) => handleChange(e)} />
+                        {
+                            error.healthScore && <p>{error.healthScore}</p>
+                        }
                     </div>
                     <br></br>
                     <button onClick={e => handleClickStep(e)}>Agregar paso</button>
@@ -93,7 +148,7 @@ export default function CreateRecipe() {
                         input.instructions?.map(
                             (instruction, index) => {
                                 return (
-                                    <div key={instruction.step}>
+                                    <div key={index}>
                                         <label className="label">Paso n° {index + 1}</label>
                                         <textarea
                                             className='input'
@@ -117,10 +172,9 @@ export default function CreateRecipe() {
                                     return (
                                         <button
                                             type='button'
-                                            className="create-recipe__button"
+                                            className={input.diets.includes(d.name) ? "create-recipe__delete-button" : "create-recipe__button"}
                                             key={d.name}
-                                        
-                                            onChange={() => handleCheck(d.name)}
+                                            onClick={() => handleDiet(d.name)}
                                         >
                                             {d.name}
                                         </button>

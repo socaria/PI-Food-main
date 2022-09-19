@@ -3,9 +3,11 @@ import { getRecipeDetail } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import './recipeDetail.css';
+import img from '../image/04.jpg'
 
-//TODO renderizar tipo de dieta de lo que proviene de base de datos
+
 //TODO agregar ingredientes
+//TODO si no existe ID pasado por query, debería retornar error
 const RecipeDetail = (props) => {
     const dispatch = useDispatch();
     React.useEffect(() => {
@@ -19,43 +21,66 @@ const RecipeDetail = (props) => {
         return state.recipeDetail
 
     })
+    console.log("🚀 ~ file: RecipeDetail.jsx ~ line 24 ~ recipeDetail ~ recipeDetail", recipeDetail)
+    
     return (
         <div>
             <h2 className="titleh2">{recipeDetail?.title}</h2>
-            <img src={recipeDetail?.image} alt='Img not found' />
-            <div className="div">
+            {
+                <img
+                    src={recipeDetail?.image || img}
+                    alt="recipe image"
+                    className="recipe-detail__image"
+                />
+            }
+
+            <div className="create-recipe__div">
                 <h3 className="titleh3">Resumen: </h3>
                 <p dangerouslySetInnerHTML={{ __html: recipeDetail?.summary }}></p>
             </div>
-            <div className="div">
-                <h3 className="titleh3">Paso a paso:</h3>
-                <div>
-                    {recipeDetail?.instructions?.map((instruction, index) => {
-                        return (
-                            <div key={instruction}>
-                                <h4>Paso n° {index + 1}</h4>
-                                <p>{instruction}</p>
-                            </div>)
-                    })}
+            {recipeDetail?.instructions?.[0] !== "" &&
+                <div className="create-recipe__div">
+                    <h3 className="titleh3">Paso a paso:</h3>
+                    <div>
+                        {
+                            recipeDetail?.instructions?.map((instruction, index) => {
+                                return (
+                                    <div key={instruction}>
+                                        <h4>Paso n° {index + 1}</h4>
+                                        <p>{instruction}</p>
+                                    </div>)
+                            })}
+                    </div>
+
                 </div>
-            </div>
-            <div className="div">
+            }
+            <div className="create-recipe__div">
                 <h3 className="titleh3">Nivel de comida saludable:</h3>
                 <p>{recipeDetail?.healthScore}</p>
             </div>
-            <div className="div">
-                <h3 className="titleh3">Tipo de dieta:</h3>
+            <div className="create-recipe__div">
+                {
+                    recipeDetail?.diets?.length > 0 &&
+                    <h3 className="titleh3">Tipo de dieta:</h3>
+
+                }
                 <ul>
                     {recipeDetail?.diets?.map(d => {
                         return (
-                            <li key={d.name}>{d.name}</li>)
+                            <button
+                                key={d.name}
+                                className="recipe-detail__diet-button"
+                            >
+                                {d.name}
+                            </button>)
                     })}
                 </ul>
             </div>
-            <div className="div">
-                <h3 className="titleh3">Tipo de plato: </h3>
-                <p>{recipeDetail?.dishTypes}</p>
-            </div>
+            {recipeDetail.dishTypes &&
+                <div className="create-recipe__div">
+                    <h3 className="titleh3">Tipo de plato: </h3>
+                    <p>{recipeDetail.dishTypes}</p>
+                </div>}
             <Link to='/home'>Volver</Link>
         </div>
     );

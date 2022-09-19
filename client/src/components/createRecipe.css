@@ -34,8 +34,12 @@
     flex-direction: row;
 }
 
-.input {
+.create-recipe__input {
     background-color: beige;
+}
+
+.create-recipe__input-error{
+    border-color: red;
 }
 
 .create-recipe__button {
@@ -43,6 +47,9 @@
     top: 70%;
     display: block;
     font-size: medium;
+    color:white;
+    border-color: #e9a74c;
+    box-shadow: none;
     padding: 8px;
     border-radius: 10px;
     font-family: inherit;
@@ -52,4 +59,16 @@
 .create-recipe__button:hover {
     background-color: rgba(233, 167, 76, 1);
     font-style: oblique;
+}
+
+.create-recipe__delete-button{
+    position: relative;
+    top: 70%;
+    display: block;
+    font-size: medium;
+    padding: 8px;
+    border-radius: 10px;
+    border-top: 0mm;
+    font-family: inherit;
+    background-color: rgba(214, 104, 45, 0.8);
 }

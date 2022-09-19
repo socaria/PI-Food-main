@@ -17,7 +17,27 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif; 
 }
 
-.div {
-    width: 700px;
-    background-color:chocolate;
+.create-recipe__div {
+    width: 400px;
+    background-color: beige;
+    border-radius: 10px;
+}
+
+.recipe-detail__image {
+    width: 400px;
+    border-radius: 10px;
+}
+
+.recipe-detail__diet-button{
+    position: relative;
+    top: 70%;
+    display: block;
+    font-size: medium;
+    color:white;
+    border-color: #e9a74c;
+    box-shadow: none;
+    padding: 8px;
+    border-radius: 10px;
+    font-family: inherit;
+    background-color: rgba(233, 167, 76, 0.8);
 }
