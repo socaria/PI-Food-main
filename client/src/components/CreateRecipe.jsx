@@ -1,39 +1,36 @@
 import React, { useEffect } from "react";
-import { Link } from 'react-router-dom';
-import { createRecipe, getDiets } from '../actions';
-import { useDispatch, useSelector } from 'react-redux';
-import './createRecipe.css'
+import { Link } from "react-router-dom";
+import { createRecipe, getDiets } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
+import "./createRecipe.css"
 
 // TODO ver si es necesario realizar otra validación
-//TODO poner foto por defecto
+//TODO agregar validaciones para que no agregue items vacios
+//TODO ver que los formularios se guarden con la primera en mayúscula
 
 export const validate = (input) => {
     let error = {};
     if (!input.title) {
-        error.title = "El nombre de la receta es requerido"
+        error.title = "Recipe name is required"
     } else if (!/^[a-zA-Z ,.]*$/.test(input.title)) {
-        error.title = "El nombre de la receta no puede contener carácteres especiales"
+        error.title = `The name of the recipe only admits letters "." and ","`
     }
     if (!input.summary) {
-        error.summary = "El resumen de la receta es requerido"
+        error.summary = "Recipe summary is required"
     }
-    if (input.healthScore < 0 || input.healthScore > 100){
-        error.healthScore = "El nivel de comida saludable debe tener un valor entre 0 y 100"
+    if (input.healthScore < 0 || input.healthScore > 100) {
+        error.healthScore = "Health score must have a value between 0 and 100"
     }
-    // if (input.instructions)
-    // if (input.diets){
-
-    // }
     return error;
 }
 export default function CreateRecipe() {
     const dispatch = useDispatch();
     const allDiets = useSelector((state) => state.diets);
     let [input, setInput] = React.useState({
-        title: '',
-        summary: '',
+        title: "",
+        summary: "",
         healthScore: 0,
-        instructions: [''],
+        instructions: [""],
         diets: []
     });
     let [error, setError] = React.useState({});
@@ -60,8 +57,6 @@ export default function CreateRecipe() {
         }
 
         let objError = validate({ ...input, [e.target.name]: e.target.value });
-        console.log("🚀 ~ file: CreateRecipe.jsx ~ line 62 ~ handleChange ~ objError", objError)
-
 
         setError(objError);
 
@@ -87,20 +82,23 @@ export default function CreateRecipe() {
         e.preventDefault();
         setInput({
             ...input,
-            instructions: [...input.instructions, '']
+            instructions: [...input.instructions, ""]
         })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(createRecipe(input));
-        setInput({
-            title: '',
-            summary: '',
-            healthScore: 0,
-            instructions: [],
-            diets: []
-        })
+        if (!error.title && !error.summary && !error.healthScore) {
+            dispatch(createRecipe(input));
+            setInput({
+                title: "",
+                summary: "",
+                healthScore: 0,
+                instructions: [],
+                diets: []
+            })
+        }
+        return ( <alert>Check erors!</alert>)
     };
 
 
@@ -108,15 +106,15 @@ export default function CreateRecipe() {
     return (
         <div className="create-recipe__background">
             <div className="create-recipe__container">
-                <Link to={'/home'}>Volver</Link>
-                <h1 className="create-recipe__title">Crea tu receta</h1>
+                <Link to={"/home"}>Home</Link>
+                <h1 className="create-recipe__title">Make your own recipe</h1>
                 <form onSubmit={(e) => handleSubmit(e)}>
                     <div>
-                        <label className="label" >Nombre de receta: </label>
+                        <label className="create-recipe__form-label" >Recipe name: </label>
                         <input
                             className={error?.title ? "create-recipe__input-error" : "create-recipe__input"}
-                            type={'text'}
-                            name={'title'}
+                            type={"text"}
+                            name={"title"}
                             value={input.title}
                             onChange={(e) => handleChange(e)}
                         />
@@ -126,32 +124,34 @@ export default function CreateRecipe() {
                     </div>
                     <br></br>
                     <div>
-                        <label className={error?.summary ? "create-recipe__input-error" : "create-recipe__input"}>Resumen: </label>
-                        <textarea className='input' name={'summary'} value={input.summary} onChange={(e) => handleChange(e)} />
+                        <label className="create-recipe__form-label">Summary: </label>
+                        <textarea className={error?.summary ? "create-recipe__input-error" : "create-recipe__input"} name={"summary"} value={input.summary} onChange={(e) => handleChange(e)} />
                         {
                             error.summary && <p>{error.summary}</p>
                         }
                     </div>
                     <br></br>
                     <div>
-                        <label className={error?.healthScore ? "create-recipe__input-error" : "create-recipe__input"}>
-                            Nivel de comida saludable: 
+                        <label className="create-recipe__form-label">
+                            Health Score:
                         </label>
-                        <input className='input' type={'number'} name={'healthScore'} value={input.healthScore} onChange={(e) => handleChange(e)} />
+                        <input className={error?.healthScore ? "create-recipe__input-error" : "create-recipe__input"} type={"number"} name={"healthScore"} value={input.healthScore} onChange={(e) => handleChange(e)} />
                         {
                             error.healthScore && <p>{error.healthScore}</p>
                         }
                     </div>
                     <br></br>
-                    <button onClick={e => handleClickStep(e)}>Agregar paso</button>
+                    <label className="create-recipe__form-label">
+                        Steps:
+                    </label>
                     {
                         input.instructions?.map(
                             (instruction, index) => {
                                 return (
                                     <div key={index}>
-                                        <label className="label">Paso n° {index + 1}</label>
+                                        <label className="create-recipe__form-label">Paso n° {index + 1}</label>
                                         <textarea
-                                            className='input'
+                                            className="input"
                                             name={`instructions_${index}`}
                                             value={input.instructions[index]}
                                             onChange={(e) => handleChange(e)}
@@ -162,16 +162,20 @@ export default function CreateRecipe() {
                         )
 
                     }
+                    <button
+                        onClick={e => handleClickStep(e)}
+                        className="create-recipe__add-step-button"
+                    >Add step</button>
                     <br></br>
                     <div className="create-recipe__diets__container">
-                        <label >Tipos de dietas: </label>
+                        <label className="create-recipe__form-label">Diet: </label>
                         <br></br>
                         <div className="create-recipe__diets__container">
                             {
                                 allDiets?.map(d => {
                                     return (
                                         <button
-                                            type='button'
+                                            type="button"
                                             className={input.diets.includes(d.name) ? "create-recipe__delete-button" : "create-recipe__button"}
                                             key={d.name}
                                             onClick={() => handleDiet(d.name)}
@@ -185,7 +189,7 @@ export default function CreateRecipe() {
 
                     </div>
                     <br></br>
-                    <button type="submit">Crear receta</button>
+                    <button type="submit">Create recipe</button>
                 </form>
             </div>
         </div>

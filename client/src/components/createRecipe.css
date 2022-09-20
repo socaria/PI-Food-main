@@ -72,3 +72,10 @@
     font-family: inherit;
     background-color: rgba(214, 104, 45, 0.8);
 }
+.create-recipe__form-label{
+    font-size: larger;
+}
+
+.create-recipe__add-step-button{
+    font-size: medium;
+}

@@ -1,19 +1,26 @@
 .search-bar__container {
     display: flex;
     flex-direction: row;
+    position: relative;
+    justify-content: center;
 }
 
 .search-bar_search-place {
     position: relative;
+   
+
 }
 
 
 .search-bar__input {
-    position: absolute;
+    position: relative;
+    width: 300px;
+    font-size: large;
 }
 
 .search-bar__search-button {
-    position: absolute;
+    position: relative;
+    font-size: large;
 }
 
 .search-bar__link-button {

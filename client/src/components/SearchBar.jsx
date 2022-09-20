@@ -30,7 +30,7 @@ export default function SearchBar() {
                         <input
                             className="search-bar__input"
                             type='text'
-                            placeholder="¿Qué estás buscando?"
+                            placeholder="Search a recipe... "
                             onChange={e => handleInputChange(e)}
                         />
                         <button
@@ -38,15 +38,15 @@ export default function SearchBar() {
                             type={'submit'}
                             onClick={e => handleSubmit(e)}
                         >
-                            Buscar
+                            🔍︎
                         </button>
                     </div>
                     <NavLink exact to="/" >
-                        <button className='search-bar__link-button'>Volver al inicio</button>
+                        <button className='search-bar__link-button'>◀ Back</button>
                     </NavLink>
                     <br></br>
                     <NavLink to="/recipes/create">
-                        <button className='search-bar__link-button'>Crear receta</button>
+                        <button className='search-bar__link-button'>✚✎ Create </button>
                     </NavLink>
             </nav>
         </header>

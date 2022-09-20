@@ -1,29 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./recipeCard.css";
+import img from '../image/04.jpg'
 
 const RecipeCard = (props) => {
 
   return (
-    <div className="card">
-      <img src={props.image} alt={props.title} />
+    <div className="recipe-card__container">
+      <div className="recipe-card__image-container">
+        <img
+          src={props?.image || img}
+          alt={props?.title}
+          className="recipe-card__image"
+        />
+        <div className="recipe-card__HS">{props.healthScore}</div>
+      </div>
       <h3>
-        <Link callsName="card-title" to={`/recipes/${props.id}`}>
+        <Link className="recipe-card__title" to={`/recipes/${props.id}`}>
           {props.title}
         </Link>
       </h3>
       <div>
-        <p>Tipo de dieta:</p>
-        <ul>
+        
+        <div>
           {
             props.diets?.map(d => (
-              <li key={d.name}>{d.name}</li>
+              <button key={d.name}>{d.name}</button>
             ))
           }
-        </ul>
+        </div>
       </div>
-
-
+      <br></br>
     </div>
   );
 };

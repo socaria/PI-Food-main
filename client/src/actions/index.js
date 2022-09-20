@@ -4,7 +4,8 @@ import {
     GET_DIETS,
     SORT_BY_HEALTH_SCORE,
     SORT_BY_TITLE,
-    FILTER_BY_DIET
+    FILTER_BY_DIET,
+    GET_RECIPE_DETAIL_ERROR
 } from './actions_type';
 import axios from 'axios';
 
@@ -15,13 +16,13 @@ export function getRecipes(title) {
         url += `?title=${title}`
     }
     return async function (dispatch) {
-       try{
-        const response = await fetch(url);
-        const json = await response.json();
-        dispatch({ type: GET_RECIPES, payload: json });
-       }catch(e){
-        console.log('ERROR', e);
-       }
+        try {
+            const response = await fetch(url);
+            const json = await response.json();
+            dispatch({ type: GET_RECIPES, payload: json });
+        } catch (e) {
+            console.log('ERROR', e);
+        }
     }
 }
 
@@ -29,23 +30,34 @@ export function getRecipes(title) {
 
 export function getRecipeDetail(id) {
     return async function (dispatch) {
-        const res = await fetch(`http://localhost:3001/recipes/${id}`);
-        const obj = await res.json();
-
+       fetch(`http://localhost:3001/recipes/${id}`)
+       .then(res => {
+           return res.json()
+       })
+       .then(obj => {
+       
         return dispatch({
             type: GET_RECIPE_DETAIL,
             payload: obj
         });
+       })
+       .catch(e => {
+            
+            return dispatch({
+                type: GET_RECIPE_DETAIL_ERROR,
+                payload: {status: e.code, message: e.message}
+            })
+        })
     }
 }
 
 
-export function createRecipe(input) {
-    return async function () {
-        const resRecipe = await axios.post(`http://localhost:3001/recipes`, input);
-        return resRecipe;
+    export function createRecipe(input) {
+        return async function () {
+            const resRecipe = await axios.post(`http://localhost:3001/recipes`, input);
+            return resRecipe;
+        }
     }
-}
 
 
     export function getDiets() {

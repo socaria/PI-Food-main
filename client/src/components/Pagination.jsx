@@ -1,4 +1,5 @@
 import React from "react";
+import './pagination.css';
 
 export default function Pagination({ recipesPerPage, allRecipes, pagination }) {
     const pageNumbers = [];
@@ -7,11 +8,11 @@ export default function Pagination({ recipesPerPage, allRecipes, pagination }) {
         pageNumbers.push(i + 1)
     }
     return (
-        <nav className="card">
+        <nav className="pagination-nav">
             {
                 pageNumbers?.map(pageNumber => (
                     <button 
-                    className="home-button"
+                    className="pagination__button"
                     key={pageNumber} 
                     onClick={() => pagination(pageNumber)}
                     >

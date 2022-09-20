@@ -1,14 +1,36 @@
-.card {
-    margin: 20px;
-    width: 18rem;
-  }
-  
-  .card-title {
-    margin-bottom: 15px;
-  }
-  
-  
-  .card-body {
-    margin-top: 0px !important;
-    padding-top: 0px !important;
-  }
+/* TODO hace hover de la tarjeta, redondear bordes, colocar bien el HS */
+.recipe-card__container {
+  width: 250px;
+  height: 300px;
+  display: flex;
+  background-color: beige;
+  flex-direction: column;
+  padding: 5vh;
+  margin: 0 16px 0 0;
+  border-radius: 10px;
+}
+
+.recipe-card__title {
+  margin-bottom: 15px;
+  word-break: break-word;
+}
+
+.recipe-card__image-container {
+  display: flex;
+  position: relative;
+  text-align: center;
+}
+
+.recipe-card__image {
+  border-radius: 10px;
+  width: 40vh;
+}
+
+.recipe-card__HS {
+  background-color: aqua;
+  border-radius: 100px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  align-items: flex-end;
+}

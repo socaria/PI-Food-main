@@ -5,15 +5,14 @@ import {
     CREATE_RECIPE,
     FILTER_BY_DIET,
     SORT_BY_TITLE,
-    SORT_BY_HEALTH_SCORE
+    SORT_BY_HEALTH_SCORE,
 } from '../actions/actions_type';
 
 const initialState = {
     recipes: [],
     allRecipes: [],
     recipeDetail: {},
-    diets: []
-
+    diets: [],
 }
 
 function rootReducer(state = initialState, action) {
@@ -27,7 +26,7 @@ function rootReducer(state = initialState, action) {
         case GET_RECIPE_DETAIL:
             return {
                 ...state,
-                recipeDetail: action.payload
+                recipeDetail: action.payload,
             }
         case CREATE_RECIPE:
             return {
@@ -45,19 +44,20 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 recipes: recipesFiltered
             }
-        case SORT_BY_TITLE:
+            case SORT_BY_TITLE:
+            console.log("🚀 ~ file: index.js ~ line 60 ~  state.recipes",  state.recipes.map(r => r.title))
             let sortedRecipesT =
-                state.recipes.sort(function (a, b) {
-                    if (a.title > b.title) {
-                        if (action.payload === 'titleAsc') return 1;
-                        return -1;
-                    }
-                    if (b.title > a.title) {
-                        if (action.payload === 'titleAsc') return -1;
-                        return 1;
-                    }
-                    return 0;
-                })
+            state.recipes.sort(function (a, b) {
+                if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                    if (action.payload === 'titleAsc') return 1;
+                    return -1;
+                }
+                if (b.title.toLowerCase() > a.title.toLowerCase()) {
+                    if (action.payload === 'titleAsc') return -1;
+                    return 1;
+                }
+                return 0;
+            })
             return {
                 ...state,
                 recipes: sortedRecipesT

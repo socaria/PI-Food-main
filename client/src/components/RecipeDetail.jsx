@@ -21,69 +21,74 @@ const RecipeDetail = (props) => {
         return state.recipeDetail
 
     })
-    console.log("🚀 ~ file: RecipeDetail.jsx ~ line 24 ~ recipeDetail ~ recipeDetail", recipeDetail)
     
+
     return (
-        <div>
-            <h2 className="titleh2">{recipeDetail?.title}</h2>
-            {
-                <img
-                    src={recipeDetail?.image || img}
-                    alt="recipe image"
-                    className="recipe-detail__image"
-                />
-            }
-
-            <div className="create-recipe__div">
-                <h3 className="titleh3">Resumen: </h3>
-                <p dangerouslySetInnerHTML={{ __html: recipeDetail?.summary }}></p>
-            </div>
-            {recipeDetail?.instructions?.[0] !== "" &&
-                <div className="create-recipe__div">
-                    <h3 className="titleh3">Paso a paso:</h3>
-                    <div>
-                        {
-                            recipeDetail?.instructions?.map((instruction, index) => {
-                                return (
-                                    <div key={instruction}>
-                                        <h4>Paso n° {index + 1}</h4>
-                                        <p>{instruction}</p>
-                                    </div>)
-                            })}
-                    </div>
-
-                </div>
-            }
-            <div className="create-recipe__div">
-                <h3 className="titleh3">Nivel de comida saludable:</h3>
-                <p>{recipeDetail?.healthScore}</p>
-            </div>
-            <div className="create-recipe__div">
+        typeof recipeDetail === 'string'
+            ? <p>
+            There are no recipes with that ID</p>
+            :
+            <div className="recipe-detail__container">
+                <h2 className="titleh2">{recipeDetail?.title}</h2>
                 {
-                    recipeDetail?.diets?.length > 0 &&
-                    <h3 className="titleh3">Tipo de dieta:</h3>
-
+                    <img
+                        src={recipeDetail?.image || img}
+                        alt="recipe image"
+                        className="recipe-detail__image"
+                    />
                 }
-                <ul>
-                    {recipeDetail?.diets?.map(d => {
-                        return (
-                            <button
-                                key={d.name}
-                                className="recipe-detail__diet-button"
-                            >
-                                {d.name}
-                            </button>)
-                    })}
-                </ul>
-            </div>
-            {recipeDetail.dishTypes &&
+
                 <div className="create-recipe__div">
-                    <h3 className="titleh3">Tipo de plato: </h3>
-                    <p>{recipeDetail.dishTypes}</p>
-                </div>}
-            <Link to='/home'>Volver</Link>
-        </div>
-    );
+                    <h3 className="titleh3">Resumen: </h3>
+                    <p dangerouslySetInnerHTML={{ __html: recipeDetail?.summary }}></p>
+                </div>
+                {recipeDetail?.instructions?.[0] !== "" &&
+                    <div className="create-recipe__div">
+                        <h3 className="titleh3">Steps:</h3>
+                        <div>
+                            {
+                                recipeDetail?.instructions?.map((instruction, index) => {
+                                    return (
+                                        <div key={instruction}>
+                                            <h4>Step n° {index + 1}</h4>
+                                            <p>{instruction}</p>
+                                        </div>)
+                                })}
+                        </div>
+
+                    </div>
+                }
+                <div className="create-recipe__div">
+                    <h3 className="titleh3">Health score:</h3>
+                    <p>{recipeDetail?.healthScore}</p>
+                </div>
+                <div className="create-recipe__div">
+                    {
+                        recipeDetail?.diets?.length > 0 &&
+                        <h3 className="titleh3">Diet: </h3>
+
+                    }
+                    <ul>
+                        {recipeDetail?.diets?.map(d => {
+                            return (
+                                <button
+                                    key={d.name}
+                                    className="recipe-detail__diet-button"
+                                >
+                                    {d.name}
+                                </button>)
+                        })}
+                    </ul>
+                </div>
+                {recipeDetail.dishTypes &&
+                    <div className="create-recipe__div">
+                        <h3 className="titleh3">Dish type: </h3>
+                        <p>{recipeDetail.dishTypes}</p>
+                    </div>}
+                <Link to='/home'>Home</Link>
+            </div>
+    
+        );
 };
 
 export default RecipeDetail;
