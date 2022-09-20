@@ -7,7 +7,12 @@ const { YOUR_API_KEY } = process.env;
 const router = Router();
 const mockJSON = require('../../mock/search.json');
 //TODO modularizar
+//TODO realizar validaciones de back-end
 //TODO ver por qué las dietas a veces se duplican
+//TODO validar datos
+//TODO hacer paginado para obtener recetas
+//TODO hacer ruta delete y put
+
 
 
 // Configurar los routers
@@ -60,10 +65,10 @@ router.get('/recipes/:id', async (req, res) => {
     const { id } = req.params;
     let recipesTotal = await getAllRecipes();
     let recipeId = await recipesTotal.filter(r => r.id == id)?.[0]
-    if (recipeId.length !== 0) {
+    if (recipeId) {
         res.status(200).send(recipeId);
     } else {
-        res.status(404).send('No existen recetas con ese Id');
+        res.status(404).json('No existen recetas con ese Id');
     }
 });
 
