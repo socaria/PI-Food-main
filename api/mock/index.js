@@ -6,12 +6,7 @@ const { Recipe, Diet } = require("../db");
 const { YOUR_API_KEY } = process.env;
 const router = Router();
 const mockJSON = require('../../mock/search.json');
-//TODO modularizar
-//TODO realizar validaciones de back-end
-//TODO ver por qué las dietas a veces se duplican
-//TODO validar datos
-//TODO hacer paginado para obtener recetas
-//TODO hacer ruta delete y put
+
 
 
 
@@ -116,7 +111,7 @@ router.post('/recipes', async (req, res) => {
         createdInDb,
         diets
     } = req.body;
-    console.log("🚀 ~ file: index.js ~ line 112 ~ router.post ~ diets", diets)
+
     try {
         let newRecipe = await Recipe.create({
             title,
