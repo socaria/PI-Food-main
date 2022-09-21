@@ -55,7 +55,8 @@ export default function Home() {
 
 
     return (
-        <div>
+        <div className="home__background">
+            
             <div className="home__container">
                 <SearchBar />
                 <h1>Recipes</h1>

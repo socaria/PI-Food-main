@@ -8,6 +8,11 @@ import img from '../image/04.jpg'
 
 //TODO agregar ingredientes
 //TODO si no existe ID pasado por query, debería retornar error
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
 const RecipeDetail = (props) => {
     const dispatch = useDispatch();
     React.useEffect(() => {
@@ -29,7 +34,7 @@ const RecipeDetail = (props) => {
             There are no recipes with that ID</p>
             :
             <div className="recipe-detail__container">
-                <h2 className="titleh2">{recipeDetail?.title}</h2>
+                <h2 className="titleh2">{recipeDetail?.title && capitalizeFirstLetter(recipeDetail?.title)}</h2>
                 {
                     <img
                         src={recipeDetail?.image || img}
@@ -40,7 +45,7 @@ const RecipeDetail = (props) => {
 
                 <div className="create-recipe__div">
                     <h3 className="titleh3">Resumen: </h3>
-                    <p dangerouslySetInnerHTML={{ __html: recipeDetail?.summary }}></p>
+                    <p dangerouslySetInnerHTML={{ __html: recipeDetail?.summary && capitalizeFirstLetter(recipeDetail?.summary)}}></p>
                 </div>
                 {recipeDetail?.instructions?.[0] !== "" &&
                     <div className="create-recipe__div">
@@ -51,7 +56,7 @@ const RecipeDetail = (props) => {
                                     return (
                                         <div key={instruction}>
                                             <h4>Step n° {index + 1}</h4>
-                                            <p>{instruction}</p>
+                                            <p>{instruction && capitalizeFirstLetter(instruction)}</p>
                                         </div>)
                                 })}
                         </div>
@@ -83,7 +88,7 @@ const RecipeDetail = (props) => {
                 {recipeDetail.dishTypes &&
                     <div className="create-recipe__div">
                         <h3 className="titleh3">Dish type: </h3>
-                        <p>{recipeDetail.dishTypes}</p>
+                        <button className="recipe-detail__diet-button">{recipeDetail.dishTypes}</button>
                     </div>}
                 <Link to='/home'>Home</Link>
             </div>

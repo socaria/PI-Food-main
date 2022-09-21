@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import "./createRecipe.css"
 
 // TODO ver si es necesario realizar otra validación
-//TODO agregar validaciones para que no agregue items vacios
-//TODO ver que los formularios se guarden con la primera en mayúscula
 
 export const validate = (input) => {
     let error = {};
@@ -23,6 +21,8 @@ export const validate = (input) => {
     }
     return error;
 }
+
+  
 export default function CreateRecipe() {
     const dispatch = useDispatch();
     const allDiets = useSelector((state) => state.diets);
@@ -189,7 +189,7 @@ export default function CreateRecipe() {
 
                     </div>
                     <br></br>
-                    <button type="submit">Create recipe</button>
+                    {input.title && input.summary && <button type="submit">Create recipe</button>}
                 </form>
             </div>
         </div>

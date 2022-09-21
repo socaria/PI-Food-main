@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./recipeCard.css";
-import img from '../image/04.jpg'
+import img from '../image/04.jpg';
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 const RecipeCard = (props) => {
 
@@ -17,7 +21,7 @@ const RecipeCard = (props) => {
       </div>
       <h3>
         <Link className="recipe-card__title" to={`/recipes/${props.id}`}>
-          {props.title}
+          {capitalizeFirstLetter(props.title)}
         </Link>
       </h3>
       <div>
