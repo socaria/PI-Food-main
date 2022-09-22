@@ -4,8 +4,6 @@ import {
     GET_DIETS,
     CREATE_RECIPE,
     FILTER_BY_DIET,
-    SORT_BY_TITLE,
-    SORT_BY_HEALTH_SCORE,
     GET_ERROR,
     SORT
 } from '../actions/actions_type';

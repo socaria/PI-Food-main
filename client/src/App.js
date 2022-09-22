@@ -4,7 +4,6 @@ import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import CreateRecipe from './components/CreateRecipe';
 import RecipeDetail from './components/RecipeDetail';
-import Navbar from './components/Navbar';
 
 function App() {
   return (
@@ -12,8 +11,7 @@ function App() {
     <div>
       <Switch>
         
-        <Route exact path="/" component={LandingPage} />
-        {/* <Navbar/> */}
+        <Route exact path="/" component={LandingPage} />     
         <Route exact path="/home" component={Home} />
         <Route path="/recipes/create" component={CreateRecipe} />
         <Route path="/recipes/:id" component={RecipeDetail} />

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './recipeDetail.css';
 import img from '../image/04.jpg';
 import RecipeCard from "./RecipeCard";
-
+import SearchBar from "./SearchBar";
 
 //TODO agregar ingredientes
 //TODO si no existe ID pasado por query, debería retornar error
@@ -35,7 +35,9 @@ const RecipeDetail = (props) => {
 
 
     return (
-        getError ?
+        <div>
+            <SearchBar />
+            getError ?
             <p>
                 {getError}</p>
             :
@@ -72,7 +74,13 @@ const RecipeDetail = (props) => {
                     }
                 </div>
             </div>
-        // <div>
+
+        </div>
+    );
+};
+
+export default RecipeDetail;
+// <div>
         // <div className="recipe-detail__container">
         //     <h2 className="titleh2">{recipeDetail?.title && capitalizeFirstLetter(recipeDetail?.title)}</h2>
         //     {
@@ -132,8 +140,3 @@ const RecipeDetail = (props) => {
         //         </div>}
         //     <Link to='/home'>Home</Link>
         // </div>
-
-    );
-};
-
-export default RecipeDetail;

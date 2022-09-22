@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { getRecipes } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
-import './searchBar.css'
+import './searchBar.css';
+import img from '../image/logo2.png'
+
 
 export default function SearchBar() {
     const dispatch = useDispatch();
@@ -27,6 +29,7 @@ export default function SearchBar() {
     return (
         <header>
             <nav className="search-bar__container">
+                    <img className="search-bar__img" src={img} alt='img'/>
                     <div className="search-bar__search-place">
                         <input
                             className="search-bar__input"
@@ -42,8 +45,8 @@ export default function SearchBar() {
                             🔍︎
                         </button>
                     </div>
-                    <NavLink exact to="/" >
-                        <button className='search-bar__link-button'>◀ Back</button>
+                    <NavLink exact to="/home" >
+                        <button className='search-bar__link-button'>Home</button>
                     </NavLink>
                     <br></br>
                     <NavLink to="/recipes/create">

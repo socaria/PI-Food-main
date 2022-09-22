@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { createRecipe, getDiets } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./createRecipe.css"
+import SearchBar from "./SearchBar";
 
 // TODO ver si es necesario realizar otra validación
 // TODO ver eliminación de paso, sólo funciona para eliminar último paso
@@ -49,8 +50,6 @@ export default function CreateRecipe() {
 
     const handleChange = (e) => {
         const aux = input.instructions;
-
-
         if (e.target.name.includes("instructions")) {
             aux[e.target.name.split("_")[1]] = e.target.value;
             setInput({
@@ -63,12 +62,8 @@ export default function CreateRecipe() {
                 [e.target.name]: e.target.value
             })
         }
-
         let objError = validate({ ...input, [e.target.name]: e.target.value });
-        console.log("🚀 ~ file: CreateRecipe.jsx ~ line 67 ~ handleChange ~ objError", objError)
-
         setError(objError);
-
     };
 
     const handleDiet = (diet) => {
@@ -114,16 +109,18 @@ export default function CreateRecipe() {
                 instructions: [],
                 diets: []
             })
+            
         }
-        return (<alert>Check erors!</alert>)
+
     };
 
 
 
     return (
         <div className="create-recipe__background">
+            <SearchBar />
             <div className="create-recipe__container">
-                <Link to={"/home"}>Home</Link>
+
                 <h1 className="create-recipe__title">Make your own recipe</h1>
                 <form onSubmit={(e) => handleSubmit(e)}>
                     <div>

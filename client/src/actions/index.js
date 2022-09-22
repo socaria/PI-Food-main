@@ -3,8 +3,8 @@ import {
     GET_ERROR,
     GET_RECIPE_DETAIL,
     GET_DIETS,
-    SORT_BY_HEALTH_SCORE,
-    SORT_BY_TITLE,
+    // SORT_BY_HEALTH_SCORE,
+    // SORT_BY_TITLE,
     FILTER_BY_DIET,
     SORT
 } from './actions_type';
@@ -59,7 +59,7 @@ export function getDiets() {
 
 export function filterByDiet(diet) {
     return async function (dispatch) {
-        const response = await fetch(`http://localhost:3001/recipes/filter/${diet}`);
+        const response = await fetch(`http://localhost:3001/recipes/?diet=${diet}`);
         const json = await response.json();
         dispatch({ type: FILTER_BY_DIET, payload: json });
     }
@@ -67,7 +67,7 @@ export function filterByDiet(diet) {
 
 export function sortBy(payload) {
     return async function (dispatch) {
-        const response = await fetch(`http://localhost:3001/recipes/sort/${payload}`);
+        const response = await fetch(`http://localhost:3001/recipes/?sortBy=${payload}`);
         const json = await response.json();
         dispatch({ type: SORT, payload: json });
     }
