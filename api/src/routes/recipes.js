@@ -14,6 +14,45 @@ const getAllRecipes = require('./api-bbdd.js')
 //TODO hacer paginado para obtener recetas
 //TODO hacer ruta delete y put
 
+
+router.get('/sort/:value', async (req, res, next) => {
+    const { value } = req.params;
+
+    try {
+        if (value) {
+            let recipesTotal = await getAllRecipes();
+            let recipesSorted = await recipesTotal.sort(function (a, b) {
+                if (value === 'titleAsc' || value === 'titleDesc') {
+                    if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                        if (value === 'titleAsc') return 1;
+                        return -1;
+                    }
+                    if (b.title.toLowerCase() > a.title.toLowerCase()) {
+                        if (value === 'titleAsc') return -1;
+                        return 1;
+                    }
+                    return 0;
+                }else if (value === 'healthScoreAsc' || value === 'healthScoreDesc') {
+                    if (a.healthScore > b.healthScore) {
+                        if (value === 'healthScoreAsc') return 1;
+                        return -1;
+                    }
+                    if (b.healthScore > a.healthScore) {
+                        if (value === 'healthScoreAsc') return -1;
+                        return 1;
+                    }
+                    return 0;
+                }
+
+            })
+            res.status(200).send(recipesSorted);
+        }
+    } catch (e) {
+
+        next(e)
+    }
+})
+
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     let recipesTotal = await getAllRecipes();
@@ -25,6 +64,31 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.get('/filter/:diet', async (req, res, next) => {
+    const { diet } = req.params;
+
+    try {
+        if (diet) {
+            let recipesTotal = await getAllRecipes();
+            let recipeFiltered = await recipesTotal.filter(r =>
+                r.diets.find((d) => (d.name === diet)))
+
+            if (recipeFiltered.length) {
+                res.status(200).send(recipeFiltered)
+            } else {
+                res.status(200).send(recipesTotal);
+            }
+        }
+    } catch (e) {
+
+        next(e)
+    }
+})
+
+
+
+
+
 router.get('/', async (req, res) => {
     const { title } = req.query;
     try {
@@ -33,14 +97,16 @@ router.get('/', async (req, res) => {
             let recipeTitle = await recipesTotal.filter(
                 r => r.title.toLowerCase().includes(title.toLowerCase()));
 
-            recipeTitle.length
-                ? res.status(200).send(recipeTitle)
-                : res.status(404).send('No existen recetas con ese nombre');
+            if (recipeTitle.length) {
+                res.status(200).send(recipeTitle)
+            } else {
+                throw new Error('There are no recipes with that name')
+            };
         } else {
             res.status(200).send(recipesTotal);
         }
-    } catch(e) {
-        console.log('ERRORRRRRRRRRRRRRRRRRRRRRRRR:', e);
+    } catch (e) {
+        res.status(404).send(e.message);
     }
 });
 
@@ -50,6 +116,7 @@ router.post('/', async (req, res) => {
         title,
         summary,
         healthScore,
+        image,
         instructions,
         createdInDb,
         diets
@@ -60,6 +127,7 @@ router.post('/', async (req, res) => {
             title,
             summary,
             healthScore,
+            image,
             instructions,
             createdInDb,
         })

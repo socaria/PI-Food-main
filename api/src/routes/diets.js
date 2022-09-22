@@ -20,7 +20,6 @@ router.get('/', async (req, res) => {
         })
     });
     const allDiets = await Diet.findAll();
-    console.log("🚀 ~ file: index.js ~ line 100 ~ router.get ~ allDiets", allDiets)
     res.send(allDiets);
 })
 

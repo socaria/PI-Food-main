@@ -20,6 +20,9 @@ module.exports = (sequelize) => {
     healthScore: {
       type: DataTypes.INTEGER,
     },
+    image: {
+      type: DataTypes.STRING,
+    },
     instructions: {
       type: DataTypes.ARRAY(DataTypes.STRING),
 
