@@ -6,7 +6,7 @@ const { Recipe, Diet } = require("../db.js");
 const { YOUR_API_KEY } = process.env;
 const router = Router();
 const mockJSON = require('../../mock/search.json');
-const getAllRecipes  = require('./api-bbdd.js')
+const getAllRecipes  = require('./utils/get-all-recipes.js')
 
 router.get('/', async (req, res) => {
     const recipesTotal = await getAllRecipes();

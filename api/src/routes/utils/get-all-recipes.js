@@ -1,11 +1,8 @@
-const { Router } = require('express');
 const axios = require('axios');
 const { Recipe, Diet } = require("../../db.js");
 const { YOUR_API_KEY } = process.env;
 const mockJSON = require('../../../mock/search.json');
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
 const getApiInfo = async () => {
 
     // const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true&number=100`);
