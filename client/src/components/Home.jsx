@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getRecipes, sortByHealthScore, sortByTitle, filterByDiet, getDiets } from '../actions';
+import { getRecipes, sortBy, filterByDiet, getDiets } from '../actions';
 import RecipeCard from "./RecipeCard";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
@@ -14,6 +14,7 @@ export default function Home() {
     const dispatch = useDispatch();
     const allRecipes = useSelector((state) => state.recipes);
     const allDiets = useSelector((state) => state.diets);
+    const getError = useSelector((state) => state.getError);
     const [currentPage, setCurrentPage] = useState(1);
     const [recipesPerPage, setRecipesPerPage] = useState(9);
     const [sort, setSort] = useState('default');
@@ -39,24 +40,34 @@ export default function Home() {
         dispatch(filterByDiet(e.target.value));
     }
 
-    function handleSortByTitle(e) {
-        e.preventDefault();
-        dispatch(sortByTitle(e.target.value));
-        setCurrentPage(1);
-        setSort(`Ordered by ${e.target.value}`)
-    }
+    // function handleSortByTitle(e) {
+    //     e.preventDefault();
+    //     dispatch(sortByTitle(e.target.value));
+    //     setCurrentPage(1);
+    //     setSort(`Ordered by ${e.target.value}`)
+    // }
 
-    function handleSortByHealthScore(e) {
+    // function handleSortByHealthScore(e) {
+    //     e.preventDefault();
+    //     dispatch(sortByHealthScore(e.target.value));
+    //     setCurrentPage(1);
+    //     setSort(`Ordered by ${e.target.value}`)
+    // }
+
+
+    function sortByA(e) {
         e.preventDefault();
-        dispatch(sortByHealthScore(e.target.value));
+        dispatch(sortBy(e.target.value));
         setCurrentPage(1);
         setSort(`Ordered by ${e.target.value}`)
     }
 
 
     return (
+
+
         <div className="home__background">
-            
+
             <div className="home__container">
                 <SearchBar />
                 <h1>Recipes</h1>
@@ -64,11 +75,11 @@ export default function Home() {
                     className="home__button"
                     onClick={e => handleClick(e)}
                 >
-                    Reload recipes
+                    Clean filters
                 </button>
                 <div>
                     <select
-                        onChange={(e) => handleSortByTitle(e)}
+                        onChange={(e) => sortByA(e)}
                         className="home__filter"
                     >
                         <option
@@ -81,7 +92,7 @@ export default function Home() {
                         </option>
                     </select>
                     <select
-                        onChange={(e) => handleSortByHealthScore(e)}
+                        onChange={(e) => sortByA(e)}
                         className="home__filter"
                     >
                         <option value='healthScoreAsc'>
@@ -108,26 +119,28 @@ export default function Home() {
                         pagination={pagination}
                     />
                 </div>
-                <div className="home__recipe-card">
-                    {
-                        currentRecipes?.map(r => {
-                            return (
-                                <div>
-                                    <RecipeCard
-                                        title={r.title}
-                                        image={r.image || img}
-                                        diets={r.diets}
-                                        id={r.id}
-                                        key={r.id}
-                                        healthScore={r.healthScore}
-                                    />
-                                    <br></br>
-                                </div>
-                            )
+                {/* TODO dar estilo al error */}
+                {getError ? <div>{getError}</div>
+                    : <div className="home__recipe-card">
+                        {
+                            currentRecipes?.map(r => {
+                                return (
+                                    <div key={r.id}>
+                                        <RecipeCard
+                                            title={r.title}
+                                            image={r.image || img}
+                                            diets={r.diets}
+                                            id={r.id}
+                                            healthScore={r.healthScore}
+                                        />
+                                        <br></br>
+                                    </div>
+                                )
 
-                        })
-                    }
-                </div>
+                            })
+                        }
+                    </div>
+                }
             </div>
 
         </div>

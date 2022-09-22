@@ -5,6 +5,10 @@
     align-items: center;
 }
 
+.recipe-detail__div {
+    display: flex;
+    flex-direction: row;
+}
 .fonts  {
     letter-spacing: -.05em;
     font-family: Verdana, Geneva, Tahoma, sans-serif; 

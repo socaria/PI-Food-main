@@ -11,21 +11,23 @@ const RecipeCard = (props) => {
 
   return (
     <div className="recipe-card__container">
-      <div className="recipe-card__image-container">
-        <img
-          src={props?.image || img}
-          alt={props?.title}
-          className="recipe-card__image"
-        />
-        <div className="recipe-card__HS">{props.healthScore}</div>
-      </div>
-      <h3>
-        <Link className="recipe-card__title" to={`/recipes/${props.id}`}>
-          {capitalizeFirstLetter(props.title)}
-        </Link>
-      </h3>
+      <Link className="recipe-card__title" to={`/recipes/${props.id}`}>
+        <div className="recipe-card__image-container">
+          <img
+            src={props?.image || img}
+            alt={props?.title}
+            className="recipe-card__image"
+          />
+          <div className="recipe-card__HS">{props.healthScore}</div>
+        </div>
+        <h3>
+
+          {props.title && capitalizeFirstLetter(props.title)}
+
+        </h3>
+      </Link>
       <div>
-        
+
         <div>
           {
             props.diets?.map(d => (
@@ -35,7 +37,7 @@ const RecipeCard = (props) => {
         </div>
       </div>
       <br></br>
-    </div>
+    </div >
   );
 };
 

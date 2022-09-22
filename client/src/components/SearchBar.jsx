@@ -7,6 +7,7 @@ import './searchBar.css'
 export default function SearchBar() {
     const dispatch = useDispatch();
     const allRecipes = useSelector(state => state.recipes);
+    const getError = useSelector(state => state.getError)
     const [input, setInput] = useState('');
 
     useEffect((input) => {

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import "./createRecipe.css"
 
 // TODO ver si es necesario realizar otra validación
+// TODO ver eliminación de paso, sólo funciona para eliminar último paso
+//TODO ver mensaje de error que figura al no colocar url correctamente
 
 export const validate = (input) => {
     let error = {};
@@ -19,10 +21,14 @@ export const validate = (input) => {
     if (input.healthScore < 0 || input.healthScore > 100) {
         error.healthScore = "Health score must have a value between 0 and 100"
     }
+    if (/^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/igm.test(input.image)) {
+        error.image = 'Must be a url direction'
+    }
+
     return error;
 }
 
-  
+
 export default function CreateRecipe() {
     const dispatch = useDispatch();
     const allDiets = useSelector((state) => state.diets);
@@ -30,6 +36,7 @@ export default function CreateRecipe() {
         title: "",
         summary: "",
         healthScore: 0,
+        image: "",
         instructions: [""],
         diets: []
     });
@@ -42,6 +49,7 @@ export default function CreateRecipe() {
 
     const handleChange = (e) => {
         const aux = input.instructions;
+
 
         if (e.target.name.includes("instructions")) {
             aux[e.target.name.split("_")[1]] = e.target.value;
@@ -57,6 +65,7 @@ export default function CreateRecipe() {
         }
 
         let objError = validate({ ...input, [e.target.name]: e.target.value });
+        console.log("🚀 ~ file: CreateRecipe.jsx ~ line 67 ~ handleChange ~ objError", objError)
 
         setError(objError);
 
@@ -77,6 +86,13 @@ export default function CreateRecipe() {
             return false;
         }
     }
+    const handleRemoveStep = (index) => {
+        input.instructions.splice(index, 1);
+        setInput({
+            ...input,
+            instructions: input.instructions
+        })
+    }
 
     const handleClickStep = (e) => {
         e.preventDefault();
@@ -94,11 +110,12 @@ export default function CreateRecipe() {
                 title: "",
                 summary: "",
                 healthScore: 0,
+                image: "",
                 instructions: [],
                 diets: []
             })
         }
-        return ( <alert>Check erors!</alert>)
+        return (<alert>Check erors!</alert>)
     };
 
 
@@ -135,9 +152,33 @@ export default function CreateRecipe() {
                         <label className="create-recipe__form-label">
                             Health Score:
                         </label>
-                        <input className={error?.healthScore ? "create-recipe__input-error" : "create-recipe__input"} type={"number"} name={"healthScore"} value={input.healthScore} onChange={(e) => handleChange(e)} />
+                        <input
+                            className={error?.healthScore ? "create-recipe__input-error" : "create-recipe__input"}
+                            type={"number"}
+                            name={"healthScore"}
+                            value={input.healthScore}
+                            onChange={(e) => handleChange(e)}
+                        />
                         {
                             error.healthScore && <p>{error.healthScore}</p>
+                        }
+                    </div>
+                    <br></br>
+                    <div>
+                        <label className="create-recipe__form-label">
+                            Image:
+                        </label>
+                        <input
+
+                            placeholder="https://example.com"
+                            // pattern="https://.*" size="30"
+                            type="url"
+                            name={"image"}
+                            value={input.image}
+                            onChange={(e) => handleChange(e)}
+                        />
+                        {
+                            error.image && <p>{error.image}</p>
                         }
                     </div>
                     <br></br>
@@ -156,6 +197,7 @@ export default function CreateRecipe() {
                                             value={input.instructions[index]}
                                             onChange={(e) => handleChange(e)}
                                         />
+                                        <button onClick={() => { handleRemoveStep(index) }}>x</button>
                                     </div>
                                 )
                             }
@@ -186,10 +228,12 @@ export default function CreateRecipe() {
                                 })
                             }
                         </div>
-
                     </div>
                     <br></br>
-                    {input.title && input.summary && <button type="submit">Create recipe</button>}
+                    {input.title && input.summary ?
+                        <button disabled={false} type="submit">Create recipe</button>
+                        : <button disabled={true} type="submit">Create recipe</button>
+                    }
                 </form>
             </div>
         </div>
