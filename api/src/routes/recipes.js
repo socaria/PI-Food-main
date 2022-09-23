@@ -21,15 +21,19 @@ router.get('/:id', async (req, res) => {
     if (recipeId) {
         res.status(200).send(recipeId);
     } else {
-        res.status(404).json('No existen recetas con ese Id');
+        res.status(404).json('There is not recipes with this ID');
     }
 });
 
 
 router.get('/', async (req, res) => {
     const { title, diet, sortBy } = req.query;
+    console.log("🚀 ~ file: recipes.js ~ line 31 ~ router.get ~ req.query", req.query)
+    const { recipesT } = req.body;
+    let recipesTotal = [];
     try {
-        let recipesTotal = await getAllRecipes();
+        recipesTotal = await getAllRecipes();
+
         if (title) {
             let recipeTitle = await recipesTotal.filter(
                 r => r.title.toLowerCase().includes(title.toLowerCase()));
@@ -39,43 +43,44 @@ router.get('/', async (req, res) => {
             } else {
                 throw new Error('There are no recipes with that name')
             };
-        } else if (diet) {
-            let recipeFiltered = await recipesTotal.filter(r =>
-                r.diets.find((d) => (d.name === diet)))
-
-            if (recipeFiltered.length) {
-                res.status(200).send(recipeFiltered)
-            } else {
-                res.status(200).send(recipesTotal);
-            }
-        } else if (sortBy) {
-            let recipesSorted = await recipesTotal.sort(function (a, b) {
-                if (sortBy === 'titleAsc' || sortBy === 'titleDesc') {
-                    if (a.title.toLowerCase() > b.title.toLowerCase()) {
-                        if (sortBy === 'titleAsc') return 1;
-                        return -1;
-                    }
-                    if (b.title.toLowerCase() > a.title.toLowerCase()) {
-                        if (sortBy === 'titleAsc') return -1;
-                        return 1;
-                    }
-                    return 0;
-                } else if (sortBy === 'healthScoreAsc' || sortBy === 'healthScoreDesc') {
-                    if (a.healthScore > b.healthScore) {
-                        if (sortBy === 'healthScoreAsc') return 1;
-                        return -1;
-                    }
-                    if (b.healthScore > a.healthScore) {
-                        if (sortBy === 'healthScoreAsc') return -1;
-                        return 1;
-                    }
-                    return 0;
-                }
-            })
-            res.status(200).send(recipesSorted);
         } else {
-            res.status(200).send(recipesTotal);
+            let recipeFiltered = recipesTotal;
+
+            if (diet) {
+                recipeFiltered = await recipeFiltered.filter(r =>
+                    r.diets.find((d) => (d.name === diet)))
+            }
+
+            if (sortBy) {
+                recipeFiltered = await recipeFiltered.sort(function (a, b) {
+                    if (sortBy === 'titleAsc' || sortBy === 'titleDesc') {
+                        if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                            if (sortBy === 'titleAsc') return 1;
+                            return -1;
+                        }
+                        if (b.title.toLowerCase() > a.title.toLowerCase()) {
+                            if (sortBy === 'titleAsc') return -1;
+                            return 1;
+                        }
+                        return 0;
+                    }
+                    if (sortBy === 'healthScoreAsc' || sortBy === 'healthScoreDesc') {
+                        if (a.healthScore > b.healthScore) {
+                            if (sortBy === 'healthScoreAsc') return 1;
+                            return -1;
+                        }
+                        if (b.healthScore > a.healthScore) {
+                            if (sortBy === 'healthScoreAsc') return -1;
+                            return 1;
+                        }
+                        return 0;
+                    }
+                })
+            }
+
+            res.status(200).send(recipeFiltered);
         }
+
     } catch (e) {
         res.status(404).send(e.message);
     }
@@ -114,4 +119,33 @@ router.post('/', async (req, res) => {
         res.status(500).send(`ERROR: ${e}`)
     }
 })
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    let recipesTotal = await getAllRecipes();
+    let recipe = recipesTotal.find(r => r.id === parseInt(id));
+    if (!id || !recipe) {
+        return res
+            .status(404)
+            .json({
+                error: 'There is not recipes with this ID'
+            });
+    }
+
+    recipesTotal = recipesTotal.filter(p => p.id !== parseInt(id));
+    res.send(recipesTotal);
+})
+
+// router.put('/:id', (req, res) => {
+//     const { id } = req.params;
+//     const {
+//         title,
+//         summary,
+//         healthScore,
+//         image,
+//         instructions,
+//         createdInDb,
+//         diets
+//     } = req.body;
+// })
 module.exports = router;
