@@ -8,14 +8,13 @@
     position: relative;
 }
 
-.create-recipe__container {
-    margin: 0;
-    color: #e9a74c;
-    display: flex;
-    position: relative;
-    align-items: center;
-    top: 0%;
-    flex-direction: column;
+.create-recipe__container {    
+    border: 1px solid black;   
+    padding: 8px;
+    border-radius: 4px;   
+    width: 500px;
+    margin: 0 auto;
+    height: 100%;
 }
 
 
@@ -31,7 +30,8 @@
 
 .create-recipe__diets__container {
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
+    max-width: 650px;
 }
 
 .create-recipe__input {

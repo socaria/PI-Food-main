@@ -4,10 +4,8 @@ import { createRecipe, getDiets } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./createRecipe.css"
 import SearchBar from "./SearchBar";
+import img from '../image/04.jpg';
 
-// TODO ver si es necesario realizar otra validación
-// TODO ver eliminación de paso, sólo funciona para eliminar último paso
-//TODO ver mensaje de error que figura al no colocar url correctamente
 
 export const validate = (input) => {
     let error = {};
@@ -22,7 +20,7 @@ export const validate = (input) => {
     if (input.healthScore < 0 || input.healthScore > 100) {
         error.healthScore = "Health score must have a value between 0 and 100"
     }
-    if (/^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/igm.test(input.image)) {
+    if (!/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/.test(input.image)) {
         error.image = 'Must be a url direction'
     }
 
@@ -83,6 +81,7 @@ export default function CreateRecipe() {
     }
     const handleRemoveStep = (index) => {
         input.instructions.splice(index, 1);
+
         setInput({
             ...input,
             instructions: input.instructions
@@ -98,8 +97,9 @@ export default function CreateRecipe() {
     }
 
     const handleSubmit = (e) => {
+
         e.preventDefault();
-        if (!error.title && !error.summary && !error.healthScore) {
+        if (input.title && !error.title && !error.summary && !error.healthScore && !error.image) {
             dispatch(createRecipe(input));
             setInput({
                 title: "",
@@ -109,7 +109,7 @@ export default function CreateRecipe() {
                 instructions: [],
                 diets: []
             })
-            
+            alert('The recipe was created successfully!');
         }
 
     };
@@ -166,16 +166,18 @@ export default function CreateRecipe() {
                             Image:
                         </label>
                         <input
-
                             placeholder="https://example.com"
-                            // pattern="https://.*" size="30"
-                            type="url"
                             name={"image"}
                             value={input.image}
                             onChange={(e) => handleChange(e)}
                         />
                         {
                             error.image && <p>{error.image}</p>
+                        }
+                        <br></br>
+                        {input.image && !error.image ?
+                            <img src={input.image} width='150px' />
+                            : <img src={img} width='150px' />
                         }
                     </div>
                     <br></br>
@@ -194,7 +196,7 @@ export default function CreateRecipe() {
                                             value={input.instructions[index]}
                                             onChange={(e) => handleChange(e)}
                                         />
-                                        <button onClick={() => { handleRemoveStep(index) }}>x</button>
+                                        <button type='button' onClick={() => { handleRemoveStep(index) }}>x</button>
                                     </div>
                                 )
                             }

@@ -1,20 +1,10 @@
-.home__background {
-    
-    height: 100vh;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    /* position: fixed;
-    opacity: 0.4; */
-}
 
 
 .home__container {
   display: flex;
   align-items: center;
   flex-direction: column;
-  
+  padding-top: 72px;
 }
 
 .home__recipe-card {
@@ -44,4 +34,10 @@
 
 .home__filter {
   font-style: oblique;
+}
+
+.home-filters__container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
 }

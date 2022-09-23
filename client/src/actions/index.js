@@ -3,21 +3,32 @@ import {
     GET_ERROR,
     GET_RECIPE_DETAIL,
     GET_DIETS,
-    // SORT_BY_HEALTH_SCORE,
-    // SORT_BY_TITLE,
     FILTER_BY_DIET,
     SORT
 } from './actions_type';
 import axios from 'axios';
 
-export function getRecipes(title) {
-    let url = 'http://localhost:3001/recipes';
-
-    if (title) {
-        url += `?title=${title}`
+export function getRecipes(queryParams) {
+    console.log("🚀 ~ file: index.js ~ line 12 ~ getRecipes ~ queryParams", queryParams)
+    let url = new URL('http://localhost:3001/recipes');
+    if (queryParams?.title) {
+        url.searchParams.append("title", queryParams?.title);
     }
+
+    if (queryParams?.diet) {
+        url.searchParams.append("diet", queryParams?.diet);
+
+    }
+
+    if (queryParams?.sortBy) {
+        url.searchParams.append("sortBy", queryParams?.sortBy);
+
+    }
+
+
     return async function (dispatch) {
         const response = await fetch(url);
+        console.log("🚀 ~ file: index.js ~ line 20 ~ response", response)
         if (response.ok) {
             const json = await response.json();
             dispatch({ type: GET_RECIPES, payload: json });
@@ -73,16 +84,3 @@ export function sortBy(payload) {
     }
 }
 
-// export function sortByTitle(payload) {
-//     return {
-//         type: SORT_BY_TITLE,
-//         payload
-//     }
-// }
-
-// export function sortByHealthScore(payload) {
-//     return {
-//         type: SORT_BY_HEALTH_SCORE,
-//         payload
-//     }
-// }

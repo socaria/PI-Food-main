@@ -6,7 +6,8 @@ import RecipeCard from "./RecipeCard";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
 import './home.css';
-import img from '../image/04.jpg'
+import img from '../image/04.jpg';
+import Error from "./Error";
 
 
 export default function Home() {
@@ -24,6 +25,9 @@ export default function Home() {
     const pagination = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
+    const [queryParams, setqueryParams] = useState(null);
+    console.log("🚀 ~ file: Home.jsx ~ line 29 ~ Home ~ queryParams", queryParams)
+
 
     useEffect(() => {
         dispatch(getRecipes());
@@ -31,13 +35,24 @@ export default function Home() {
     },
         [dispatch]);
 
+        useEffect(() => {
+            dispatch(getRecipes(queryParams));
+            setCurrentPage(1);
+
+        }, [dispatch, queryParams])
+
     function handleClick(e) {
         e.preventDefault();
         dispatch(getRecipes());
     }
 
     function handleFilterByDiet(e) {
-        dispatch(filterByDiet(e.target.value));
+        e.preventDefault();
+        setqueryParams({
+            ...queryParams,
+            diet: e.target.value,
+        });
+
     }
 
     // function handleSortByTitle(e) {
@@ -57,31 +72,24 @@ export default function Home() {
 
     function sortByA(e) {
         e.preventDefault();
-        dispatch(sortBy(e.target.value));
-        setCurrentPage(1);
-        setSort(`Ordered by ${e.target.value}`)
+        setqueryParams({
+            ...queryParams,
+            sortBy: e.target.value,
+        });
     }
-
-
     return (
-
-
-        <div className="home__background">
-
+        <>
+            <SearchBar />
             <div className="home__container">
-                <SearchBar />
+
                 <h1>Recipes</h1>
-                <button
-                    className="home__button"
-                    onClick={e => handleClick(e)}
-                >
-                    Clean filters
-                </button>
-                <div>
+
+                <div className="home-filters__container">
                     <select
                         onChange={(e) => sortByA(e)}
                         className="home__filter"
                     >
+                        <option value=''>Sort by health name</option>
                         <option
                             value='titleAsc'>
                             Sort by name (A-Z)
@@ -95,6 +103,7 @@ export default function Home() {
                         onChange={(e) => sortByA(e)}
                         className="home__filter"
                     >
+                        <option value=''>Sort by health score</option>
                         <option value='healthScoreAsc'>
                             Sort by health score (🢁)
                         </option>
@@ -104,7 +113,7 @@ export default function Home() {
                     </select>
                     {/* TODO filtrar por más de un valor */}
                     <select onChange={(e) => handleFilterByDiet(e)}>
-                        <option value='All'>All</option>
+                        <option value=''>All</option>
                         {
                             allDiets?.map(d => {
                                 return (
@@ -113,14 +122,24 @@ export default function Home() {
                             })
                         }
                     </select>
-                    <Pagination
-                        recipesPerPage={recipesPerPage}
-                        allRecipes={allRecipes.length}
-                        pagination={pagination}
-                    />
+                    <button
+                        className="home__button"
+                        onClick={e => handleClick(e)}
+                    >
+                        Clean filters
+                    </button>
                 </div>
+                <Pagination
+                    recipesPerPage={recipesPerPage}
+                    allRecipes={allRecipes.length}
+                    pagination={pagination}
+                />
                 {/* TODO dar estilo al error */}
-                {getError ? <div>{getError}</div>
+                {getError ?
+                    <div>
+                        <Error message={getError} />
+                        <div>{getError}</div>
+                    </div>
                     : <div className="home__recipe-card">
                         {
                             currentRecipes?.map(r => {
@@ -143,7 +162,7 @@ export default function Home() {
                 }
             </div>
 
-        </div>
+        </>
     )
 
 }
