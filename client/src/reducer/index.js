@@ -4,7 +4,7 @@ import {
     GET_DIETS,
     CREATE_RECIPE,
     FILTER_BY_DIET,
-    GET_ERROR,
+    REQUEST_ERROR,
     SORT
 } from '../actions/actions_type';
 
@@ -13,7 +13,7 @@ const initialState = {
     allRecipes: [],
     recipeDetail: {},
     diets: [],
-    getError: ""
+    errorMessage: ""
 }
 
 function rootReducer(state = initialState, action) {
@@ -22,7 +22,8 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 recipes: action.payload,
-                allRecipes: action.payload
+                allRecipes: action.payload,
+                errorMessage: ""
             }
         case GET_RECIPE_DETAIL:
             return {
@@ -48,44 +49,11 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 recipes: action.payload
             }
-        // case SORT_BY_TITLE:
-        //     let sortedRecipesT =
-        //         state.recipes.sort(function (a, b) {
-        //             if (a.title.toLowerCase() > b.title.toLowerCase()) {
-        //                 if (action.payload === 'titleAsc') return 1;
-        //                 return -1;
-        //             }
-        //             if (b.title.toLowerCase() > a.title.toLowerCase()) {
-        //                 if (action.payload === 'titleAsc') return -1;
-        //                 return 1;
-        //             }
-        //             return 0;
-        //         })
-        //     return {
-        //         ...state,
-        //         recipes: sortedRecipesT
-        //     }
-        // case SORT_BY_HEALTH_SCORE:
-        //     let sortedRecipesHS =
-        //         state.recipes.sort(function (a, b) {
-        //             if (a.healthScore > b.healthScore) {
-        //                 if (action.payload === 'healthScoreAsc') return 1;
-        //                 return -1;
-        //             }
-        //             if (b.healthScore > a.healthScore) {
-        //                 if (action.payload === 'healthScoreAsc') return -1;
-        //                 return 1;
-        //             }
-        //             return 0;
-        //         })
-        //     return {
-        //         ...state,
-        //         recipes: sortedRecipesHS
-        //     } 
-        case GET_ERROR:
+      
+        case REQUEST_ERROR:
             return {
                 ...state,
-                getError: action.payload
+                errorMessage: action.payload
             }
 
         default: return state;

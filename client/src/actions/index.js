@@ -1,6 +1,6 @@
 import {
     GET_RECIPES,
-    GET_ERROR,
+    REQUEST_ERROR,
     GET_RECIPE_DETAIL,
     GET_DIETS,
     FILTER_BY_DIET,
@@ -9,7 +9,6 @@ import {
 import axios from 'axios';
 
 export function getRecipes(queryParams) {
-    console.log("🚀 ~ file: index.js ~ line 12 ~ getRecipes ~ queryParams", queryParams)
     let url = new URL('http://localhost:3001/recipes');
     if (queryParams?.title) {
         url.searchParams.append("title", queryParams?.title);
@@ -28,12 +27,11 @@ export function getRecipes(queryParams) {
 
     return async function (dispatch) {
         const response = await fetch(url);
-        console.log("🚀 ~ file: index.js ~ line 20 ~ response", response)
         if (response.ok) {
             const json = await response.json();
             dispatch({ type: GET_RECIPES, payload: json });
         } else {
-            dispatch({ type: GET_ERROR, payload: 'There are no recipes with that name' });
+            dispatch({ type: REQUEST_ERROR, payload: 'There are no recipes with that name' });
         }
     }
 }
@@ -46,7 +44,7 @@ export function getRecipeDetail(id) {
             const json = await response.json();
             dispatch({ type: GET_RECIPE_DETAIL, payload: json });
         } else {
-            dispatch({ type: GET_ERROR, payload: 'There are no recipes with that ID' });
+            dispatch({ type: REQUEST_ERROR, payload: 'There are no recipes with that ID' });
         }
     }
 }
@@ -68,19 +66,19 @@ export function getDiets() {
     }
 }
 
-export function filterByDiet(diet) {
-    return async function (dispatch) {
-        const response = await fetch(`http://localhost:3001/recipes/?diet=${diet}`);
-        const json = await response.json();
-        dispatch({ type: FILTER_BY_DIET, payload: json });
-    }
-}
+// export function filterByDiet(diet) {
+//     return async function (dispatch) {
+//         const response = await fetch(`http://localhost:3001/recipes/?diet=${diet}`);
+//         const json = await response.json();
+//         dispatch({ type: FILTER_BY_DIET, payload: json });
+//     }
+// }
 
-export function sortBy(payload) {
-    return async function (dispatch) {
-        const response = await fetch(`http://localhost:3001/recipes/?sortBy=${payload}`);
-        const json = await response.json();
-        dispatch({ type: SORT, payload: json });
-    }
-}
+// export function sortBy(payload) {
+//     return async function (dispatch) {
+//         const response = await fetch(`http://localhost:3001/recipes/?sortBy=${payload}`);
+//         const json = await response.json();
+//         dispatch({ type: SORT, payload: json });
+//     }
+// }
 
