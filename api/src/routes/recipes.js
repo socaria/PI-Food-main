@@ -28,7 +28,6 @@ router.get('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     const { title, diet, sortBy } = req.query;
-    console.log("🚀 ~ file: recipes.js ~ line 31 ~ router.get ~ req.query", req.query)
     const { recipesT } = req.body;
     let recipesTotal = [];
     try {
