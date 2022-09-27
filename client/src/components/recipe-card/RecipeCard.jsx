@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./recipeCard.css";
-import img from '../image/04.jpg';
+import "../recipe-card/recipeCard.css";
+import img from '../../image/04.jpg';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -18,7 +18,7 @@ const RecipeCard = (props) => {
             alt={props?.title}
             className="recipe-card__image"
           />
-          <div className="recipe-card__HS">{props.healthScore}</div>
+          <p className="recipe-card__HS">{props.healthScore}</p>
         </div>
         <h3>
 
@@ -30,8 +30,8 @@ const RecipeCard = (props) => {
 
         <div>
           {
-            props.diets?.map(d => (
-              <button key={d.name}>{d.name}</button>
+            props.diets?.map((d, index) => (
+              <label className="recipe-card__diet-label" key={d.name+'_'+index}>{d.name}</label>
             ))
           }
         </div>

@@ -2,10 +2,17 @@ import React from "react";
 import './pagination.css';
 
 const next = (currentPage, pageNumbers) => {
-    if(currentPage < pageNumbers.length){
+    if (currentPage < pageNumbers.length) {
         return currentPage + 1;
-    }else{
+    } else {
         return pageNumbers.length;
+    }
+}
+const classPage = (currentPage, pageNumber) => {
+    if (currentPage === pageNumber)
+    return 'current-page'; 
+    else{
+        return 'other-page'
     }
 }
 
@@ -23,16 +30,19 @@ export default function Pagination({ recipesPerPage, allRecipes, handlePaginatio
             >
                 {'<<'}
             </button>
-            <button
-                className="pagination-button"
-                onClick={() => handlePagination(currentPage - 1 || 1)}
-            >
-                {'<'}
-            </button>
+            {currentPage !== 1 &&
+                <button
+                    className="pagination-button"
+                    onClick={() => handlePagination(currentPage - 1 || 1)}
+                >
+                    {'<'}
+                </button>}
             {
+                
                 pageNumbers?.map(pageNumber => (
+                    
                     <button
-                        className="pagination-button"
+                        className={`pagination-button__${classPage(currentPage, pageNumber)}`}
                         key={pageNumber}
                         onClick={() => handlePagination(pageNumber)}
                     >
@@ -40,12 +50,14 @@ export default function Pagination({ recipesPerPage, allRecipes, handlePaginatio
                     </button>
                 ))
             }
-            <button
-                className="pagination-button"
-                onClick={() => handlePagination(next(currentPage, pageNumbers))}
-            >
-                {'>'}
-            </button>
+            {
+                currentPage !== pageNumbers.length &&
+                <button
+                    className="pagination-button"
+                    onClick={() => handlePagination(next(currentPage, pageNumbers))}
+                >
+                    {'>'}
+                </button>}
             <button
                 className="pagination-button"
                 onClick={() => handlePagination(pageNumbers.length)}

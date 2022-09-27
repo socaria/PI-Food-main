@@ -15,7 +15,7 @@
 .recipe-card__container:hover {
   transform: scale(1.010);
   cursor: pointer;
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
 .recipe-card__title {
@@ -40,13 +40,25 @@
 }
 
 .recipe-card__HS {
-  background-image: url("../image/tag.png");
+  background-image: url("../../image/tag.png");
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 16px;
+  padding: 8px;
   position: absolute;
   color: white;
-  bottom: 8px;
+  bottom: 0px;
   right: 0px;
   align-items: flex-end;
+}
+
+.recipe-card__diet-label {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  font-size: 11px;
+  padding: 8px;
+  border-radius: 10px;
+  font-family: inherit;
+  background-color: rgba(255, 221, 23, 255);
+  margin-left: 8px;
 }

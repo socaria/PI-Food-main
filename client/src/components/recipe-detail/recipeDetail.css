@@ -1,0 +1,104 @@
+/* TODO corregir nombres de clases */
+.recipe-detail {
+    display: flex;
+}
+
+.recipe-detail__container {
+    width: 500px;
+    margin: 102px auto 24px auto;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 10px;
+}
+
+.recipe-detail__diet {
+    display: inline-flex;
+    align-items: center;
+}
+
+.diet__label {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    font-size: 11px;
+    padding: 8px;
+    border-radius: 10px;
+    font-family: inherit;
+    background-color: rgba(255, 221, 23, 255);
+    margin-left: 8px;
+  }
+.image__health-score {
+    background-image: url("../../image/tag.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 16px;
+    position: absolute;
+    color: white;
+    bottom: 8px;
+    right: 60px;
+    align-items: flex-end;
+  }
+.recipe-detail__div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.fonts  {
+    letter-spacing: -.05em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+}
+
+.titleh2  {
+    margin: 0 0 16px 0;
+    text-align: center;
+    font-size: 2.125rem;
+    line-height: 2.75rem;
+    letter-spacing: -.05em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+}
+
+.recipe-detail__title {
+    font-size: 11px;
+    line-height: 2.75rem;
+    letter-spacing: -.05em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+}
+
+.crecipe-detail__container
+recipe-detail__container {
+    width: 900px;
+    background-color: beige;
+    border-radius: 10px;
+}
+.recipe-detail__image {
+    display: flex;
+    position: relative;
+}
+
+.image__src {
+    margin: 0 auto;
+    width: 400px;
+    border-radius: 10px;
+}
+
+.recipe-detail__summary {
+    text-align: justify;
+    line-height: 1.25;
+}
+
+.recipe-detail__diet-button{
+    position: relative;
+    top: 70%;
+    display: block;
+    font-size: medium;
+    color:white;
+    border-color: #e9a74c;
+    box-shadow: none;
+    padding: 8px;
+    border-radius: 10px;
+    font-family: inherit;
+    background-color: rgba(255,221,23,255);
+}

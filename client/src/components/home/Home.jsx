@@ -1,14 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getRecipes, sortBy, filterByDiet, getDiets } from '../actions';
-import RecipeCard from "./RecipeCard";
-import SearchBar from "./SearchBar";
-import Pagination from "./Pagination";
+import { getRecipes, sortBy, filterByDiet, getDiets } from '../../actions';
+import RecipeCard from "../recipe-card/RecipeCard";
+import SearchBar from "../search-bar/SearchBar";
+import Pagination from "../pagination/Pagination";
 import './home.css';
-import img from '../image/04.jpg';
-import Error from "./Message";
-import Message from "./Message";
+import img from '../../image/04.jpg';
+import Message from "../message/Message";
 
 
 export default function Home() {

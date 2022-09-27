@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { createRecipe, getDiets } from "../actions";
+import * as actions from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./createRecipe.css"
-import SearchBar from "./SearchBar";
-import img from '../image/04.jpg';
+import SearchBar from "../search-bar/SearchBar";
+import img from '../../image/04.jpg';
 
 
 export const validate = (input) => {
@@ -43,7 +43,7 @@ export default function CreateRecipe() {
 
 
     useEffect(() => {
-        dispatch(getDiets());
+        dispatch(actions.getDiets());
     }, []);
 
     const handleChange = (e) => {
@@ -100,7 +100,7 @@ export default function CreateRecipe() {
 
         e.preventDefault();
         if (input.title && !error.title && !error.summary && !error.healthScore && !error.image) {
-            dispatch(createRecipe(input));
+            dispatch(actions.createRecipe(input));
             setInput({
                 title: "",
                 summary: "",

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from 'react-router-dom';
-import { getRecipes } from "../actions";
+import { getRecipes } from "../../actions";
 import { useDispatch } from "react-redux";
 import './searchBar.css';
-import img from '../image/logo2.png';
+import img from '../../image/logo2.png';
 
 
 
