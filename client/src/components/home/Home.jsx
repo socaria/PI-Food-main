@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getRecipes, sortBy, filterByDiet, getDiets } from '../../actions';
+import { getRecipes, sortBy, filterByDiet, getDiets, getCurrentPage } from '../../actions';
 import RecipeCard from "../recipe-card/RecipeCard";
 import SearchBar from "../search-bar/SearchBar";
 import Pagination from "../pagination/Pagination";
@@ -16,14 +16,13 @@ export default function Home() {
     const allRecipes = useSelector((state) => state.recipes);
     const allDiets = useSelector((state) => state.diets);
     const errorMessage = useSelector((state) => state.errorMessage);
-    const [currentPage, setCurrentPage] = useState(1);
+    const currentPage = useSelector((state) => state.currentPage)
+    // const [currentPage, setCurrentPage] = useState(1);
     const recipesPerPage= 9;
     const iOfLastRecipe = currentPage * recipesPerPage;
     const iOfFirstRecipe = iOfLastRecipe - recipesPerPage;
     const currentRecipes = allRecipes.slice(iOfFirstRecipe, iOfLastRecipe)
-    const handlePagination = (pageNumber) => {
-        setCurrentPage(pageNumber)
-    }
+    
     const [queryParams, setqueryParams] = useState(null);
     
 
@@ -35,7 +34,7 @@ export default function Home() {
 
     useEffect(() => {
         dispatch(getRecipes(queryParams));
-        setCurrentPage(1);
+        getCurrentPage(1);
 
     }, [dispatch, queryParams])
 
@@ -43,7 +42,9 @@ export default function Home() {
         e.preventDefault();
         dispatch(getRecipes());
     }
-
+    function handlePagination(pageNumber) {
+        dispatch(getCurrentPage(pageNumber))
+    }
     function handleFilterByDiet(e) {
         e.preventDefault();
         setqueryParams({
@@ -65,8 +66,6 @@ export default function Home() {
         <>
             <SearchBar />
             <div className="home__container">
-
-                {/* <h1>Recipes</h1> */}
                 {errorMessage ?
                     <Message message={errorMessage} type="info" />
                     : (
@@ -76,7 +75,7 @@ export default function Home() {
                                     onChange={(e) => sortByA(e)}
                                     className="home__filter"
                                 >
-                                    <option value=''>Sort by...</option>
+                                    <option className="home__filter" value=''>Sort by...</option>
                                     <option
                                         value='titleAsc'>
                                         Sort by name (A-Z)
@@ -92,9 +91,7 @@ export default function Home() {
                                         Sort by health score (🡻)
                                     </option>
                                 </select>
-
-                                {/* TODO filtrar por más de un valor */}
-                                <select onChange={(e) => handleFilterByDiet(e)}>
+                                <select className="home__filter" onChange={(e) => handleFilterByDiet(e)}>
                                     <option value=''>Filter by diet</option>
                                     {
                                         allDiets?.map(d => {

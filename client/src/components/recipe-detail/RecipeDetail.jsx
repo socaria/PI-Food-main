@@ -31,8 +31,6 @@ const RecipeDetail = (props) => {
         return state.errorMessage
 
     })
-    console.log("🚀 ~ file: RecipeDetail.jsx ~ line 36 ~ errorMessage ~ errorMessage", errorMessage)
-
 
     return (
         <>
@@ -50,13 +48,13 @@ const RecipeDetail = (props) => {
                         <p className="image__health-score">{recipeDetail.healthScore}</p>
                     </div>
                     <div className="create-recipe__div">
-                        <h3 className="titleh3">Summary</h3>
+                        <h3 className="recipe-detail__title">Summary</h3>
                         <p className="recipe-detail__summary" dangerouslySetInnerHTML={{ __html: recipeDetail?.summary && capitalizeFirstLetter(recipeDetail?.summary) }}></p>
                     </div>
                     {console.log(recipeDetail?.instructions?.[0])}
                     {recipeDetail?.instructions?.[0] && recipeDetail?.instructions?.[0] !== "" &&
                         <div className="create-recipe__div">
-                            <h3 className="titleh3">Steps</h3>
+                            <h3 className="recipe-detail__title">Steps</h3>
                             <div>
                                 {
                                     recipeDetail?.instructions?.map((instruction, index) => {
@@ -73,7 +71,7 @@ const RecipeDetail = (props) => {
                     <div className="recipe-detail__div">
                         {
                             recipeDetail?.diets?.length > 0 &&
-                            <h3 className="titleh3">Diet</h3> 
+                            <h3 className="recipe-detail__title">Diet</h3> 
                         }
                         <ul className="recipe-detail__diet">
                             {recipeDetail?.diets?.map(d => {
@@ -89,7 +87,7 @@ const RecipeDetail = (props) => {
                     </div>
                     {recipeDetail.dishTypes &&
                         <div className="recipe-detail__div">
-                            <h3 className="titleh3">Dish type</h3>
+                            <h3 className="recipe-detail__title">Dish type</h3>
                             <label className="diet__label">{recipeDetail.dishTypes}</label>
                         </div>}
                 </div>

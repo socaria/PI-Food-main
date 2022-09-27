@@ -5,7 +5,8 @@ import {
     CREATE_RECIPE,
     FILTER_BY_DIET,
     REQUEST_ERROR,
-    SORT
+    SORT,
+    CURRENT_PAGE
 } from '../actions/actions_type';
 
 const initialState = {
@@ -13,7 +14,9 @@ const initialState = {
     allRecipes: [],
     recipeDetail: {},
     diets: [],
-    errorMessage: ""
+    errorMessage: "",
+    currentPage: 1,
+    
 }
 
 function rootReducer(state = initialState, action) {
@@ -25,6 +28,12 @@ function rootReducer(state = initialState, action) {
                 allRecipes: action.payload,
                 errorMessage: ""
             }
+            case CURRENT_PAGE:
+                console.log("🚀 ~ file: index.js ~ line 40 ~ rootReducer ~ action.payload", action.payload)
+                return {
+                    ...state,
+                    currentPage: action.payload
+                }
         case GET_RECIPE_DETAIL:
             return {
                 ...state,
@@ -42,14 +51,15 @@ function rootReducer(state = initialState, action) {
         case FILTER_BY_DIET:
             return {
                 ...state,
-                recipes: action.payload
+                recipes: action.payload,
+                allRecipes: action.payload,
             }
-        case SORT :
+        case SORT:
             return {
                 ...state,
                 recipes: action.payload
             }
-      
+
         case REQUEST_ERROR:
             return {
                 ...state,

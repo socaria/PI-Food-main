@@ -10,8 +10,8 @@ const next = (currentPage, pageNumbers) => {
 }
 const classPage = (currentPage, pageNumber) => {
     if (currentPage === pageNumber)
-    return 'current-page'; 
-    else{
+        return 'current-page';
+    else {
         return 'other-page'
     }
 }
@@ -30,17 +30,27 @@ export default function Pagination({ recipesPerPage, allRecipes, handlePaginatio
             >
                 {'<<'}
             </button>
-            {currentPage !== 1 &&
+            {currentPage !== 1 ?
                 <button
+                    disabled={false}
                     className="pagination-button"
                     onClick={() => handlePagination(currentPage - 1 || 1)}
                 >
                     {'<'}
-                </button>}
+                </button>
+                :
+                <button
+                    disabled={true}
+                    className="pagination-button"
+                    onClick={() => handlePagination(currentPage - 1 || 1)}
+                >
+                    {'<'}
+                </button>
+            }
             {
-                
+
                 pageNumbers?.map(pageNumber => (
-                    
+
                     <button
                         className={`pagination-button__${classPage(currentPage, pageNumber)}`}
                         key={pageNumber}
@@ -51,13 +61,24 @@ export default function Pagination({ recipesPerPage, allRecipes, handlePaginatio
                 ))
             }
             {
-                currentPage !== pageNumbers.length &&
-                <button
-                    className="pagination-button"
-                    onClick={() => handlePagination(next(currentPage, pageNumbers))}
-                >
-                    {'>'}
-                </button>}
+                currentPage !== pageNumbers.length ?
+                    <button
+                        disabled={false}
+                        className="pagination-button"
+                        onClick={() => handlePagination(next(currentPage, pageNumbers))}
+                    >
+                        {'>'}
+                    </button>
+                    :
+                    <button
+                        disabled={true}
+                        className="pagination-button"
+                        onClick={() => handlePagination(next(currentPage, pageNumbers))}
+                    >
+                        {'>'}
+                    </button>
+            }
+
             <button
                 className="pagination-button"
                 onClick={() => handlePagination(pageNumbers.length)}

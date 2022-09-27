@@ -76,25 +76,15 @@ describe("<RecipeCard />", () => {
       );
     });
 
-    it("Debería mapear la cantidad de diets que hayan en el store y renderizar un label por cada una", () => {
+    it("Debería mapear la cantidad de diets que haya en el store y renderizar un label por cada una", () => {
 
-      expect(recipeCard(recipes[0]).find("label")).toHaveLength(5);
+      expect(recipeCard(recipes[0]).find("label")).toHaveLength(4);
+      expect(recipeCard(recipes[1]).find("label")).toHaveLength(3);
+      expect(recipeCard(recipes[2]).find("label")).toHaveLength(1);
+      expect(recipeCard(recipes[3]).find("label")).toHaveLength(7);
     });
    
-    it('Debería renderizar un "label" con cada diet de la prop "diets" de cada "recipe"', () => {
-      expect(recipeCard(recipes[0]).find(".recipe-card__diet-label")).toBe(
-        "7s6");
-      
-      expect(recipeCard(recipes[1]).find("p").at(1).text()).toBe(
-        "diets: Richard Linklater"
-      );
-      expect(recipeCard(recipes[2]).find("p").at(1).text()).toBe(
-        "diets: Francis Ford Coppola"
-      );
-      expect(recipeCard(recipes[3]).find("p").at(1).text()).toBe(
-        "diets: Ron Shelton"
-      );
-    });
+    
 
     it('Debería renderizar un componente <Link> que encierre el "title" de cada "recipe" y debería redirigir a "/recipes/:id"', () => {
       expect(recipeCard(recipes[0]).find(Link)).toHaveLength(1);
@@ -104,41 +94,4 @@ describe("<RecipeCard />", () => {
     });
   });
 
-  describe("Dispatch to store", () => {
-  
-    it("Debería hacer un dispatch al store utilizando la action 'deleterecipe' al hacer click en el boton previamente creado para poder eliminar una recipe. Debe pasarle el Id de la recipe", () => {
-      const deleterecipeSpy = jest.spyOn(actions, "deleterecipe");
-      const recipeCard = mount(
-        <Provider store={store}>
-          <MemoryRouter>
-            <RecipeCard
-              id={recipes[0].id}
-              title={recipes[0].title}
-              diets={recipes[0].diets}
-              healthScore={recipes[0].healthScore}
-            />
-          </MemoryRouter>
-        </Provider>
-      );
-      recipeCard.find("button").simulate("click");
-      expect(deleterecipeSpy).toHaveBeenCalled();
-      expect(deleterecipeSpy).toHaveBeenCalledWith(recipes[0].id);
-
-      const recipeCard2 = mount(
-        <Provider store={store}>
-          <MemoryRouter>
-            <RecipeCard
-              id={recipes[1].id}
-              title={recipes[1].title}
-              diets={recipes[1].diets}
-              healthScore={recipes[1].healthScore}
-            />
-          </MemoryRouter>
-        </Provider>
-      );
-      recipeCard2.find("button").simulate("click");
-      expect(deleterecipeSpy).toHaveBeenCalled();
-      expect(deleterecipeSpy).toHaveBeenCalledWith(recipes[1].id);
-    });
-  });
 });

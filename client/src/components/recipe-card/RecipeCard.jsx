@@ -11,30 +11,28 @@ const RecipeCard = (props) => {
 
   return (
     <div className="recipe-card__container">
-      <Link className="recipe-card__title" to={`/recipes/${props.id}`}>
+      <Link to={`/recipes/${props.id}`}>
         <div className="recipe-card__image-container">
           <img
             src={props?.image || img}
             alt={props?.title}
             className="recipe-card__image"
           />
-          <p className="recipe-card__HS">{props.healthScore}</p>
+          <p title="Health Score" className="recipe-card__HS">{props.healthScore}</p>
         </div>
-        <h3>
+        <h3 className="recipe-card__title" title={props.title}>
 
           {props.title && capitalizeFirstLetter(props.title)}
 
         </h3>
       </Link>
-      <div>
-
-        <div>
+      <div className="recipe-card__diets">
           {
             props.diets?.map((d, index) => (
               <label className="recipe-card__diet-label" key={d.name+'_'+index}>{d.name}</label>
             ))
           }
-        </div>
+        
       </div>
       <br></br>
     </div >

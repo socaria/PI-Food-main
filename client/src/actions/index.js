@@ -4,7 +4,8 @@ import {
     GET_RECIPE_DETAIL,
     GET_DIETS,
     FILTER_BY_DIET,
-    SORT
+    SORT,
+    CURRENT_PAGE
 } from './actions_type';
 import axios from 'axios';
 
@@ -57,6 +58,12 @@ export function createRecipe(input) {
     }
 }
 
+export function getCurrentPage(pageNumber) {
+    return {
+        type: CURRENT_PAGE,
+        payload: pageNumber
+    }
+}
 
 export function getDiets() {
     return async function (dispatch) {
