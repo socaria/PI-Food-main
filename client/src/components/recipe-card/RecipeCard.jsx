@@ -21,7 +21,7 @@ const RecipeCard = (props) => {
           {props.healthScore < 50 && <p title="Health Score" className="recipe-card__HS recipe-card__HS--bad">
             {props.healthScore}
           </p>}
-          {props.healthScore < 70 && <p title="Health Score" className="recipe-card__HS recipe-card__HS--regular">
+          {props.healthScore < 70 && props.healthScore >= 50 && <p title="Health Score" className="recipe-card__HS recipe-card__HS--regular">
             {props.healthScore}
           </p>}
           {props.healthScore >= 70 && <p title="Health Score" className="recipe-card__HS recipe-card__HS--good">

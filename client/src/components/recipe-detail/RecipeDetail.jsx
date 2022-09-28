@@ -45,13 +45,21 @@ const RecipeDetail = (props) => {
                             alt="recipe image"
                             className="image__src"
                         />
-                        <p className="image__health-score">{recipeDetail.healthScore}</p>
+                        {recipeDetail.healthScore < 50 && <p title="Health Score" className="image__health-score image__health-score--bad">
+                            {recipeDetail.healthScore}
+                        </p>}
+                        {recipeDetail.healthScore < 70 && recipeDetail.healthScore >= 50 && <p title="Health Score" className="image__health-score image__health-score--regular">
+                            {recipeDetail.healthScore}
+                        </p>}
+                        {recipeDetail.healthScore >= 70 && <p title="Health Score" className="image__health-score image__health-score--good">
+                            {recipeDetail.healthScore}
+                        </p>}
                     </div>
                     <div className="create-recipe__div">
                         <h3 className="recipe-detail__title">Summary</h3>
                         <p className="recipe-detail__summary" dangerouslySetInnerHTML={{
-                             __html: recipeDetail?.summary && capitalizeFirstLetter(recipeDetail?.summary.replaceAll(new RegExp(/<(?:a\b[^>]*>|\/a>)/g),""))
-                              }}></p>
+                            __html: recipeDetail?.summary && capitalizeFirstLetter(recipeDetail?.summary.replaceAll(new RegExp(/<(?:a\b[^>]*>|\/a>)/g), ""))
+                        }}></p>
                     </div>
                     {recipeDetail?.instructions?.[0] && recipeDetail?.instructions?.[0] !== "" &&
                         <div className="create-recipe__div">
@@ -72,7 +80,7 @@ const RecipeDetail = (props) => {
                     <div className="recipe-detail__div">
                         {
                             recipeDetail?.diets?.length > 0 &&
-                            <h3 className="recipe-detail__title">Diet</h3> 
+                            <h3 className="recipe-detail__title">Diet</h3>
                         }
                         <ul className="recipe-detail__diet">
                             {recipeDetail?.diets?.map(d => {
