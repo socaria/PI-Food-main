@@ -28,7 +28,6 @@ router.get('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     const { title, diet, sortBy } = req.query;
-    const { recipesT } = req.body;
     let recipesTotal = [];
     try {
         recipesTotal = await getAllRecipes();
@@ -98,6 +97,8 @@ router.post('/', async (req, res) => {
     } = req.body;
 
     try {
+        if(!title) { throw new Error ('title should be defined')}
+        if(!summary) { throw new Error ('summary should be defined')}
         let newRecipe = await Recipe.create({
             title,
             summary,
@@ -106,16 +107,16 @@ router.post('/', async (req, res) => {
             instructions,
             createdInDb,
         })
-
+        if(diets){
         let dietDb = await Diet.findAll({
             where: { name: diets }
         })
-        newRecipe.addDiets(dietDb);
-        res.send('Receta creada con éxito');
+
+        newRecipe.addDiets(dietDb);}
+        res.send('Recipe created successfully');
 
     } catch (e) {
-        // TODO: enviar mensaje de error
-        res.status(500).send(`ERROR: ${e}`)
+        res.status(500).send(`${e}`)
     }
 })
 
