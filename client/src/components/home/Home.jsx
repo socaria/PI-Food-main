@@ -11,6 +11,7 @@ import Message from "../message/Message";
 
 
 export default function Home() {
+    
 
     const dispatch = useDispatch();
     const allRecipes = useSelector((state) => state.recipes);
@@ -53,7 +54,7 @@ export default function Home() {
             sortBy: e.target.value,
         }));
     }
-    
+
     return (
         <>
             <SearchBar isSearchVisible />

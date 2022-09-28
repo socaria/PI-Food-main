@@ -66,13 +66,14 @@ const RecipeDetail = (props) => {
                             <h3 className="recipe-detail__title">Steps</h3>
                             <div>
                                 {
-                                    recipeDetail?.instructions?.map((instruction, index) => {
-                                        return (
-                                            <div key={instruction}>
-                                                <h4>Step n° {index + 1}</h4>
-                                                <p>{instruction && capitalizeFirstLetter(instruction)}</p>
-                                            </div>)
-                                    })}
+                                    recipeDetail?.instructions?.filter(instruction => instruction !== "")
+                                        .map((instruction, index) => {
+                                            return (
+                                                <div key={instruction}>
+                                                    <h4>Step n° {index + 1}</h4>
+                                                    <p>{capitalizeFirstLetter(instruction)}</p>
+                                                </div>)
+                                        })}
                             </div>
 
                         </div>
