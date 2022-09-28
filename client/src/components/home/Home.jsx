@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getRecipes, sortBy, filterByDiet, getDiets, getCurrentPage } from '../../actions';
 import RecipeCard from "../recipe-card/RecipeCard";
@@ -17,14 +17,11 @@ export default function Home() {
     const allDiets = useSelector((state) => state.diets);
     const errorMessage = useSelector((state) => state.errorMessage);
     const currentPage = useSelector((state) => state.currentPage)
-    // const [currentPage, setCurrentPage] = useState(1);
     const recipesPerPage = 9;
     const iOfLastRecipe = currentPage * recipesPerPage;
     const iOfFirstRecipe = iOfLastRecipe - recipesPerPage;
     const currentRecipes = allRecipes.slice(iOfFirstRecipe, iOfLastRecipe);
     const queryParams = useSelector(state => state.queryParams);
-    // const [queryParams, setqueryParams] = useState(null);
-
 
     useEffect(() => {
         dispatch(getRecipes());
@@ -32,11 +29,6 @@ export default function Home() {
     },
         []);
 
-    // useEffect(() => {
-    //     dispatch(getRecipes(queryParams));
-    //     getCurrentPage(1);
-
-    // }, [dispatch, queryParams])
 
     function handleCleanFilters(e) {
         e.preventDefault();
@@ -58,7 +50,6 @@ export default function Home() {
         }));
 
     }
-
 
     function sortByA(e) {
         e.preventDefault();
@@ -101,7 +92,7 @@ export default function Home() {
                                 </select>
                                 <select
                                     key={"filterBy_" + queryParams?.diet}
-                                    value={ queryParams?.diet || ''}
+                                    value={queryParams?.diet || ''}
                                     className="home__filter"
                                     onChange={(e) => handleFilterByDiet(e)}
                                 >
@@ -145,7 +136,6 @@ export default function Home() {
                                                         <br></br>
                                                     </div>
                                                 )
-
                                             })
                                         }
                                     </div>
@@ -154,9 +144,6 @@ export default function Home() {
                     )
                 }
             </div>
-
-
         </>
     )
-
 }

@@ -3,7 +3,6 @@ import {
     REQUEST_ERROR,
     GET_RECIPE_DETAIL,
     GET_DIETS,
-    FILTER_BY_DIET,
     CURRENT_PAGE
 } from './actions_type';
 import axios from 'axios';
@@ -71,13 +70,7 @@ export function getDiets() {
     }
 }
 
-export function filterByCreated(diet) {
-    return async function (dispatch) {
-        const response = await fetch(`http://localhost:3001/recipes/?diet=${diet}`);
-        const json = await response.json();
-        dispatch({ type: FILTER_BY_DIET, payload: json });
-    }
-}
+
 
 // export function sortBy(payload) {
 //     return async function (dispatch) {

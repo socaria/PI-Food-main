@@ -3,7 +3,6 @@ import {
     GET_RECIPE_DETAIL,
     GET_DIETS,
     CREATE_RECIPE,
-    FILTER_BY_DIET,
     REQUEST_ERROR,
     SORT,
     CURRENT_PAGE
@@ -48,12 +47,6 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 diets: action.payload
-            }
-        case FILTER_BY_DIET:
-            return {
-                ...state,
-                recipes: action.payload,
-                allRecipes: action.payload,
             }
         case SORT:
             return {

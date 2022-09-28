@@ -245,7 +245,7 @@ export default function CreateRecipe() {
                         </div>
                     </div>
                     <br></br>
-                    {input.title && input.summary ?
+                    {input.title && input.summary && !error.title && !error.summary && !error.healthScore && !error.image?
                         <button className="create-recipe__button" disabled={false} type="submit">Create recipe</button>
                         : <button className="create-recipe__button create-recipe__button--disabled" disabled={true} type="submit">Create recipe</button>
                     }

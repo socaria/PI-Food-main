@@ -47,7 +47,7 @@
     bottom: 8px;
     right: 60px;
   }
-  .recipe-card__HS--bad {
+  .image__health-score--bad {
     background-image: url("../../image/tag-b.png");
   }
   .image__health-score--regular {
