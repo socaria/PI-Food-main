@@ -2,10 +2,12 @@ import {
     GET_RECIPES,
     REQUEST_ERROR,
     GET_RECIPE_DETAIL,
+    FILTER_BY_DIET,
     GET_DIETS,
     CURRENT_PAGE
 } from './actions_type';
 import axios from 'axios';
+import { bindActionCreators } from 'redux';
 
 export function getRecipes(queryParams) {
     let url = new URL('http://localhost:3001/recipes');
@@ -13,10 +15,10 @@ export function getRecipes(queryParams) {
         url.searchParams.append("title", queryParams?.title);
     }
 
-    if (queryParams?.diet) {
-        url.searchParams.append("diet", queryParams?.diet);
+    // if (queryParams?.diet) {
+    //     url.searchParams.append("diet", queryParams?.diet);
 
-    }
+    // }
 
     if (queryParams?.sortBy) {
         url.searchParams.append("sortBy", queryParams?.sortBy);
@@ -70,7 +72,13 @@ export function getDiets() {
     }
 }
 
-
+export function getRecipesByDiet(diet) {
+    return function (dispatch) {
+        dispatch({type: FILTER_BY_DIET,
+        payload: diet
+})
+    }
+}
 
 // export function sortBy(payload) {
 //     return async function (dispatch) {

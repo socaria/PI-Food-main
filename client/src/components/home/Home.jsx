@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getRecipes, sortBy, filterByDiet, getDiets, getCurrentPage } from '../../actions';
+import { getRecipes, getRecipesByDiet, getDiets, getCurrentPage } from '../../actions';
 import RecipeCard from "../recipe-card/RecipeCard";
 import SearchBar from "../search-bar/SearchBar";
 import Pagination from "../pagination/Pagination";
@@ -26,15 +26,13 @@ export default function Home() {
     useEffect(() => {
         dispatch(getRecipes());
         dispatch(getDiets());
-    },
-        []);
+    }, []);
 
 
     function handleCleanFilters(e) {
         e.preventDefault();
         dispatch(getRecipes(null));
         dispatch(getCurrentPage(1));
-
     }
 
     function handlePagination(pageNumber) {
@@ -44,11 +42,7 @@ export default function Home() {
     function handleFilterByDiet(e) {
         e.preventDefault();
         dispatch(getCurrentPage(1));
-        dispatch(getRecipes({
-            ...queryParams,
-            diet: e.target.value,
-        }));
-
+        dispatch(getRecipesByDiet(e.target.value));
     }
 
     function sortByA(e) {
@@ -59,6 +53,7 @@ export default function Home() {
             sortBy: e.target.value,
         }));
     }
+    
     return (
         <>
             <SearchBar isSearchVisible />

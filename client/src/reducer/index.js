@@ -5,7 +5,8 @@ import {
     CREATE_RECIPE,
     REQUEST_ERROR,
     SORT,
-    CURRENT_PAGE
+    CURRENT_PAGE,
+    FILTER_BY_DIET
 } from '../actions/actions_type';
 
 const initialState = {
@@ -52,6 +53,12 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 recipes: action.payload
+            }
+        case FILTER_BY_DIET:
+            return {
+                ...state,
+                recipes: state.recipes.filter(r => r.diets.find(d => d.name === action.payload)),
+                queryParams: {...state.queryParams, diet: action.payload}
             }
 
         case REQUEST_ERROR:
