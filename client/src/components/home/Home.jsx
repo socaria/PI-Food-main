@@ -18,35 +18,49 @@ export default function Home() {
     const errorMessage = useSelector((state) => state.errorMessage);
     const currentPage = useSelector((state) => state.currentPage)
     // const [currentPage, setCurrentPage] = useState(1);
-    const recipesPerPage= 9;
+    const recipesPerPage = 9;
     const iOfLastRecipe = currentPage * recipesPerPage;
     const iOfFirstRecipe = iOfLastRecipe - recipesPerPage;
     const currentRecipes = allRecipes.slice(iOfFirstRecipe, iOfLastRecipe)
-    
+
     const [queryParams, setqueryParams] = useState(null);
-    
+
 
     useEffect(() => {
-        dispatch(getRecipes());
-        dispatch(getDiets());
+        if (!queryParams) {
+            dispatch(getRecipes());
+            dispatch(getDiets());
+        } else {
+            console.log("🚀 ~ file: Home.jsx ~ line 35 ~ useEffect ~ queryParams", queryParams)
+            dispatch(getRecipes(queryParams));
+        }
+
+        
     },
-        [dispatch]);
+        [dispatch, queryParams]);
 
-    useEffect(() => {
-        dispatch(getRecipes(queryParams));
-        getCurrentPage(1);
+    // useEffect(() => {
+    //     dispatch(getRecipes(queryParams));
+    //     getCurrentPage(1);
 
-    }, [dispatch, queryParams])
+    // }, [dispatch, queryParams])
 
     function handleClick(e) {
         e.preventDefault();
         dispatch(getRecipes());
+        dispatch(getCurrentPage(1));
+        setqueryParams({
+            ...queryParams,
+            sortBy: '',
+            diet: ''
+        })
     }
     function handlePagination(pageNumber) {
         dispatch(getCurrentPage(pageNumber))
     }
     function handleFilterByDiet(e) {
         e.preventDefault();
+        dispatch(getCurrentPage(1));
         setqueryParams({
             ...queryParams,
             diet: e.target.value,
@@ -57,6 +71,7 @@ export default function Home() {
 
     function sortByA(e) {
         e.preventDefault();
+        dispatch(getCurrentPage(1));
         setqueryParams({
             ...queryParams,
             sortBy: e.target.value,

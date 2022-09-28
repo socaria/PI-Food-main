@@ -5,6 +5,7 @@
   align-items: center;
   flex-direction: column;
   margin-top: 102px;
+  width: 100%;
 }
 
 .home__recipe-card {

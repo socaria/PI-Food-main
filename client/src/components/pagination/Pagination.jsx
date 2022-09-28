@@ -24,13 +24,24 @@ export default function Pagination({ recipesPerPage, allRecipes, handlePaginatio
     }
     return (
         <nav className="pagination-nav">
-            <button
-                className="pagination-button"
-                onClick={() => handlePagination(1)}
-            >
-                {'<<'}
-            </button>
-            {currentPage !== 1 ?
+            {pageNumbers.length > 2 && currentPage !== 1  ?
+                <button
+                    disabled={false}
+                    className="pagination-button"
+                    onClick={() => handlePagination(1)}
+                >
+                    {'<<'}
+                </button>
+                :
+                <button
+                    disabled={true}
+                    className="pagination-button pagination__button--disabled"
+                    onClick={() => handlePagination(1)}
+                >
+                    {'<<'}
+                </button>
+            }
+            {currentPage !== 1 && pageNumbers.length > 1 ?
                 <button
                     disabled={false}
                     className="pagination-button"
@@ -41,7 +52,7 @@ export default function Pagination({ recipesPerPage, allRecipes, handlePaginatio
                 :
                 <button
                     disabled={true}
-                    className="pagination-button"
+                    className="pagination-button pagination__button--disabled"
                     onClick={() => handlePagination(currentPage - 1 || 1)}
                 >
                     {'<'}
@@ -72,17 +83,27 @@ export default function Pagination({ recipesPerPage, allRecipes, handlePaginatio
                     :
                     <button
                         disabled={true}
-                        className="pagination-button"
+                        className="pagination-button pagination__button--disabled"
                         onClick={() => handlePagination(next(currentPage, pageNumbers))}
                     >
                         {'>'}
                     </button>
             }
 
+            {
+                pageNumbers.length > 2 && currentPage !== pageNumbers.length ?
+
+                <button
+                    className="pagination-button"
+                    onClick={() => handlePagination(pageNumbers.length)}
+                >{'>>'}</button>
+            :
             <button
-                className="pagination-button"
-                onClick={() => handlePagination(pageNumbers.length)}
-            >{'>>'}</button>
+            className="pagination-button pagination__button--disabled"
+                    onClick={() => handlePagination(pageNumbers.length)}
+                >{'>>'}</button>
+            
+            }
         </nav>
     )
 }

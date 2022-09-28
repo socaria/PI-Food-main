@@ -16,7 +16,8 @@ const initialState = {
     diets: [],
     errorMessage: "",
     currentPage: 1,
-    
+    queryParams: []
+
 }
 
 function rootReducer(state = initialState, action) {
@@ -26,14 +27,14 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 recipes: action.payload,
                 allRecipes: action.payload,
-                errorMessage: ""
+                errorMessage: "",
+                queryParams: action.query
             }
-            case CURRENT_PAGE:
-                console.log("🚀 ~ file: index.js ~ line 40 ~ rootReducer ~ action.payload", action.payload)
-                return {
-                    ...state,
-                    currentPage: action.payload
-                }
+        case CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.payload
+            }
         case GET_RECIPE_DETAIL:
             return {
                 ...state,

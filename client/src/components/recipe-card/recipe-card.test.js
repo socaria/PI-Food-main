@@ -1,4 +1,3 @@
-import * as actions from '../../actions';
 import * as data from "../../../../api/mock/search.json";
 
 import { Link, MemoryRouter } from "react-router-dom";

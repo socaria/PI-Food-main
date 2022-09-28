@@ -39,7 +39,7 @@ const RecipeDetail = (props) => {
                 <Message message={errorMessage} type="error" />
                 :
                 <div className="recipe-detail__container">
-                    <h2 className="titleh2">{recipeDetail?.title && capitalizeFirstLetter(recipeDetail?.title)}</h2>
+                    <h2 className="recipe-detail__recipe-title">{recipeDetail?.title && capitalizeFirstLetter(recipeDetail?.title)}</h2>
                     <div className="recipe-detail__image">
                         <img src={recipeDetail?.image || img}
                             alt="recipe image"
@@ -78,7 +78,7 @@ const RecipeDetail = (props) => {
                                 return (
                                     <label
                                         key={d.name}
-                                        className="diet__label"
+                                        className="recipe-detail__diet-label"
                                     >
                                         {d.name}
                                     </label>)
@@ -88,7 +88,7 @@ const RecipeDetail = (props) => {
                     {recipeDetail.dishTypes &&
                         <div className="recipe-detail__div">
                             <h3 className="recipe-detail__title">Dish type</h3>
-                            <label className="diet__label">{recipeDetail.dishTypes}</label>
+                            <label className="recipe-detail__diet-label">{recipeDetail.dishTypes}</label>
                         </div>}
                 </div>
             }

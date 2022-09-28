@@ -42,13 +42,15 @@
   text-align: center;
   border-radius: 10px;
   width: 250px;
+  max-height: 200px;
 }
 
 .recipe-card__HS {
   background-image: url("../../image/tag.png");
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 8px;
+  width:44px;
+  height: 44px;
   position: absolute;
   color: white;
   bottom: 0px;
