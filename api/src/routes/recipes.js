@@ -8,12 +8,6 @@ const router = Router();
 const mockJSON = require('../../mock/search.json');
 const getAllRecipes = require('./utils/get-all-recipes.js')
 
-//TODO realizar validaciones de back-end
-//TODO ver por qué las dietas a veces se duplican
-//TODO validar datos
-//TODO hacer paginado para obtener recetas
-//TODO hacer ruta delete y put
-
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     let recipesTotal = await getAllRecipes();
@@ -122,9 +116,11 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
-    let recipesTotal = await getAllRecipes();
-    let recipe = recipesTotal.find(r => r.id === parseInt(id));
-    if (!id || !recipe) {
+    let recipeToDelete = await Recipe.findAll({
+        where: { id: id }
+    })
+    console.log("🚀 ~ file: recipes.js ~ line 122 ~ router.delete ~ recipeToDelete", recipeToDelete)
+    if (!recipeToDelete[0]) {
         return res
             .status(404)
             .json({
@@ -132,20 +128,8 @@ router.delete('/:id', async (req, res) => {
             });
     }
 
-    recipesTotal = recipesTotal.filter(p => p.id !== parseInt(id));
-    res.send(recipesTotal);
+    let recipesTotal = await Recipe.destroy({where: {id: id}})
+    res.send('done');
 })
 
-// router.put('/:id', (req, res) => {
-//     const { id } = req.params;
-//     const {
-//         title,
-//         summary,
-//         healthScore,
-//         image,
-//         instructions,
-//         createdInDb,
-//         diets
-//     } = req.body;
-// })
 module.exports = router;
