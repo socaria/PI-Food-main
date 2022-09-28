@@ -21,23 +21,16 @@ export default function Home() {
     const recipesPerPage = 9;
     const iOfLastRecipe = currentPage * recipesPerPage;
     const iOfFirstRecipe = iOfLastRecipe - recipesPerPage;
-    const currentRecipes = allRecipes.slice(iOfFirstRecipe, iOfLastRecipe)
-
-    const [queryParams, setqueryParams] = useState(null);
+    const currentRecipes = allRecipes.slice(iOfFirstRecipe, iOfLastRecipe);
+    const queryParams = useSelector(state => state.queryParams);
+    // const [queryParams, setqueryParams] = useState(null);
 
 
     useEffect(() => {
-        if (!queryParams) {
-            dispatch(getRecipes());
-            dispatch(getDiets());
-        } else {
-            console.log("🚀 ~ file: Home.jsx ~ line 35 ~ useEffect ~ queryParams", queryParams)
-            dispatch(getRecipes(queryParams));
-        }
-
-        
+        dispatch(getRecipes());
+        dispatch(getDiets());
     },
-        [dispatch, queryParams]);
+        []);
 
     // useEffect(() => {
     //     dispatch(getRecipes(queryParams));
@@ -45,26 +38,24 @@ export default function Home() {
 
     // }, [dispatch, queryParams])
 
-    function handleClick(e) {
+    function handleCleanFilters(e) {
         e.preventDefault();
-        dispatch(getRecipes());
+        dispatch(getRecipes(null));
         dispatch(getCurrentPage(1));
-        setqueryParams({
-            ...queryParams,
-            sortBy: '',
-            diet: ''
-        })
+
     }
+
     function handlePagination(pageNumber) {
         dispatch(getCurrentPage(pageNumber))
     }
+
     function handleFilterByDiet(e) {
         e.preventDefault();
         dispatch(getCurrentPage(1));
-        setqueryParams({
+        dispatch(getRecipes({
             ...queryParams,
             diet: e.target.value,
-        });
+        }));
 
     }
 
@@ -72,21 +63,23 @@ export default function Home() {
     function sortByA(e) {
         e.preventDefault();
         dispatch(getCurrentPage(1));
-        setqueryParams({
+        dispatch(getRecipes({
             ...queryParams,
             sortBy: e.target.value,
-        });
+        }));
     }
     return (
         <>
-            <SearchBar />
+            <SearchBar isSearchVisible />
             <div className="home__container">
-                {errorMessage ?
-                    <Message message={errorMessage} type="info" />
+                {errorMessage
+                    ? <Message message={errorMessage} type="error" />
                     : (
                         <>
                             <div className="home-filters__container">
                                 <select
+                                    key={"sortBy_" + queryParams?.sortBy}
+                                    value={queryParams?.sortBy || ''}
                                     onChange={(e) => sortByA(e)}
                                     className="home__filter"
                                 >
@@ -106,19 +99,24 @@ export default function Home() {
                                         Sort by health score (🡻)
                                     </option>
                                 </select>
-                                <select className="home__filter" onChange={(e) => handleFilterByDiet(e)}>
+                                <select
+                                    key={"filterBy_" + queryParams?.diet}
+                                    value={ queryParams?.diet || ''}
+                                    className="home__filter"
+                                    onChange={(e) => handleFilterByDiet(e)}
+                                >
                                     <option value=''>Filter by diet</option>
                                     {
                                         allDiets?.map(d => {
                                             return (
-                                                <option key={d.id} value={d.name}>{d.name}</option>
+                                                <option key={d.name} value={d.name}>{d.name}</option>
                                             )
                                         })
                                     }
                                 </select>
                                 <button
                                     className="home__button"
-                                    onClick={e => handleClick(e)}
+                                    onClick={e => handleCleanFilters(e)}
                                 >
                                     Clean filters
                                 </button>
@@ -129,26 +127,29 @@ export default function Home() {
                                 handlePagination={handlePagination}
                                 currentPage={currentPage}
                             />
-                            <div className="home__recipe-card">
-                                {
-                                    currentRecipes?.map(r => {
-                                        return (
-                                            <div key={r.id}>
-                                                <RecipeCard
-                                                    title={r.title}
-                                                    image={r.image || img}
-                                                    diets={r.diets}
-                                                    id={r.id}
-                                                    healthScore={r.healthScore}
-                                                />
-                                                <br></br>
-                                            </div>
-                                        )
+                            {!currentRecipes.length
+                                ? <Message message={"No recipes found"} type="info" />
+                                : (
+                                    <div className="home__recipe-card">
+                                        {
+                                            currentRecipes?.map(r => {
+                                                return (
+                                                    <div key={r.id}>
+                                                        <RecipeCard
+                                                            title={r.title}
+                                                            image={r.image || img}
+                                                            diets={r.diets}
+                                                            id={r.id}
+                                                            healthScore={r.healthScore}
+                                                        />
+                                                        <br></br>
+                                                    </div>
+                                                )
 
-                                    })
-                                }
-                            </div>
-
+                                            })
+                                        }
+                                    </div>
+                                )}
                         </>
                     )
                 }

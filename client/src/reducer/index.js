@@ -16,7 +16,7 @@ const initialState = {
     diets: [],
     errorMessage: "",
     currentPage: 1,
-    queryParams: []
+    queryParams: null
 
 }
 

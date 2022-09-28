@@ -17,6 +17,9 @@
 .recipe-detail__diet {
     display: inline-flex;
     align-items: center;
+    justify-content: flex-start;
+    margin: 4px;
+    padding: 0px;
 }
 
 .recipe-detail__diet-label {
@@ -33,23 +36,33 @@
   }
 
 .image__health-score {
-    background-image: url("../../image/tag.png");
+    display: flex;
+    justify-content: center;
     background-size: cover;
     background-repeat: no-repeat;
-
     width: 58px;
     height: 58px;
     position: absolute;
     color: white;
     bottom: 8px;
     right: 60px;
-    align-items: flex-end;
   }
+  .recipe-card__HS--bad {
+    background-image: url("../../image/tag-b.png");
+  }
+  .image__health-score--regular {
+    background-image: url("../../image/tag-r.png");
+  }
+  
+  .image__health-score--good {
+    background-image: url("../../image/tag-g.png");
+  }
+
 
 .recipe-detail__div {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items:flex-start;
 }
 
 .recipe-detail__recipe-title  {
@@ -62,15 +75,18 @@
 }
 
 .recipe-detail__title {
-    font-size: 11px;
-    line-height: 2.75rem;
-    letter-spacing: -.05em;
+    font-size: 18px;
+    margin: 4px;
 }
 
-.crecipe-detail__container
-recipe-detail__container {
-    width: 900px;
-    background-color: beige;
+.recipe-detail__container {
+    width: 500px;
+    margin: 102px auto 24px auto;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 16px;
     border-radius: 10px;
 }
 .recipe-detail__image {
@@ -87,5 +103,6 @@ recipe-detail__container {
 .recipe-detail__summary {
     text-align: justify;
     line-height: 1.25;
+    text-decoration: none;
 }
 

@@ -46,7 +46,7 @@
 }
 
 .recipe-card__HS {
-  background-image: url("../../image/tag.png");
+  
   background-size: cover;
   background-repeat: no-repeat;
   width:44px;
@@ -56,6 +56,17 @@
   bottom: 0px;
   right: 0px;
   align-items: flex-end;
+}
+
+.recipe-card__HS--bad {
+  background-image: url("../../image/tag-b.png");
+}
+.recipe-card__HS--regular {
+  background-image: url("../../image/tag-r.png");
+}
+
+.recipe-card__HS--good {
+  background-image: url("../../image/tag-g.png");
 }
 
 .recipe-card__diets {

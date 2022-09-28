@@ -18,7 +18,15 @@ const RecipeCard = (props) => {
             alt={props?.title}
             className="recipe-card__image"
           />
-          <p title="Health Score" className="recipe-card__HS">{props.healthScore}</p>
+          {props.healthScore < 50 && <p title="Health Score" className="recipe-card__HS recipe-card__HS--bad">
+            {props.healthScore}
+          </p>}
+          {props.healthScore < 70 && <p title="Health Score" className="recipe-card__HS recipe-card__HS--regular">
+            {props.healthScore}
+          </p>}
+          {props.healthScore >= 70 && <p title="Health Score" className="recipe-card__HS recipe-card__HS--good">
+            {props.healthScore}
+          </p>}
         </div>
         <h3 className="recipe-card__title" title={props.title}>
 
@@ -27,12 +35,12 @@ const RecipeCard = (props) => {
         </h3>
       </Link>
       <div className="recipe-card__diets">
-          {
-            props.diets?.map((d, index) => (
-              <label className="recipe-card__diet-label" key={d.name+'_'+index}>{d.name}</label>
-            ))
-          }
-        
+        {
+          props.diets?.map((d, index) => (
+            <label className="recipe-card__diet-label" key={d.name + '_' + index}>{d.name}</label>
+          ))
+        }
+
       </div>
       <br></br>
     </div >

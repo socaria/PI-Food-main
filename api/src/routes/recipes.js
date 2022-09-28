@@ -22,56 +22,55 @@ router.get('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     const { title, diet, sortBy } = req.query;
-    let recipesTotal = [];
+    let recipesFiltered = [];
     try {
-        recipesTotal = await getAllRecipes();
+        recipesFiltered = await getAllRecipes();
 
         if (title) {
-            let recipeTitle = await recipesTotal.filter(
+            recipesFiltered = await recipesFiltered.filter(
                 r => r.title.toLowerCase().includes(title.toLowerCase()));
 
-            if (recipeTitle.length) {
-                res.status(200).send(recipeTitle)
-            } else {
-                throw new Error('There are no recipes with that name')
+            if (!recipesFiltered.length) {
+                throw new Error('No recipes found')
             };
-        } else {
-            let recipeFiltered = recipesTotal;
-
-            if (diet) {
-                recipeFiltered = await recipeFiltered.filter(r =>
-                    r.diets.find((d) => (d.name === diet)))
-            }
-
-            if (sortBy) {
-                recipeFiltered = await recipeFiltered.sort(function (a, b) {
-                    if (sortBy === 'titleAsc' || sortBy === 'titleDesc') {
-                        if (a.title.toLowerCase() > b.title.toLowerCase()) {
-                            if (sortBy === 'titleAsc') return 1;
-                            return -1;
-                        }
-                        if (b.title.toLowerCase() > a.title.toLowerCase()) {
-                            if (sortBy === 'titleAsc') return -1;
-                            return 1;
-                        }
-                        return 0;
-                    }
-                    if (sortBy === 'healthScoreAsc' || sortBy === 'healthScoreDesc') {
-                        if (a.healthScore > b.healthScore) {
-                            if (sortBy === 'healthScoreAsc') return 1;
-                            return -1;
-                        }
-                        if (b.healthScore > a.healthScore) {
-                            if (sortBy === 'healthScoreAsc') return -1;
-                            return 1;
-                        }
-                        return 0;
-                    }
-                })
-            }
-
-            res.status(200).send(recipeFiltered);
         }
+
+
+        if (diet) {
+            recipesFiltered = await recipesFiltered.filter(r =>
+                r.diets.find((d) => (d.name === diet)))
+
+        }
+
+        if (sortBy) {
+            recipesFiltered = await recipesFiltered.sort(function (a, b) {
+                if (sortBy === 'titleAsc' || sortBy === 'titleDesc') {
+                    if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                        if (sortBy === 'titleAsc') return 1;
+                        return -1;
+                    }
+                    if (b.title.toLowerCase() > a.title.toLowerCase()) {
+                        if (sortBy === 'titleAsc') return -1;
+                        return 1;
+                    }
+                    return 0;
+                }
+                if (sortBy === 'healthScoreAsc' || sortBy === 'healthScoreDesc') {
+                    if (a.healthScore > b.healthScore) {
+                        if (sortBy === 'healthScoreAsc') return 1;
+                        return -1;
+                    }
+                    if (b.healthScore > a.healthScore) {
+                        if (sortBy === 'healthScoreAsc') return -1;
+                        return 1;
+                    }
+                    return 0;
+                }
+            })
+
+
+        }
+            res.status(200).send(recipesFiltered);
 
     } catch (e) {
         res.status(404).send(e.message);
@@ -91,8 +90,8 @@ router.post('/', async (req, res) => {
     } = req.body;
 
     try {
-        if(!title) { throw new Error ('title should be defined')}
-        if(!summary) { throw new Error ('summary should be defined')}
+        if (!title) { throw new Error('title should be defined') }
+        if (!summary) { throw new Error('summary should be defined') }
         let newRecipe = await Recipe.create({
             title,
             summary,
@@ -101,12 +100,13 @@ router.post('/', async (req, res) => {
             instructions,
             createdInDb,
         })
-        if(diets){
-        let dietDb = await Diet.findAll({
-            where: { name: diets }
-        })
+        if (diets) {
+            let dietDb = await Diet.findAll({
+                where: { name: diets }
+            })
 
-        newRecipe.addDiets(dietDb);}
+            newRecipe.addDiets(dietDb);
+        }
         res.send('Recipe created successfully');
 
     } catch (e) {
@@ -119,7 +119,7 @@ router.delete('/:id', async (req, res) => {
     let recipeToDelete = await Recipe.findAll({
         where: { id: id }
     })
-    console.log("🚀 ~ file: recipes.js ~ line 122 ~ router.delete ~ recipeToDelete", recipeToDelete)
+
     if (!recipeToDelete[0]) {
         return res
             .status(404)
@@ -128,7 +128,7 @@ router.delete('/:id', async (req, res) => {
             });
     }
 
-    let recipesTotal = await Recipe.destroy({where: {id: id}})
+    let recipesTotal = await Recipe.destroy({ where: { id: id } })
     res.send('done');
 })
 

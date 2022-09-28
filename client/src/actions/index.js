@@ -4,14 +4,12 @@ import {
     GET_RECIPE_DETAIL,
     GET_DIETS,
     FILTER_BY_DIET,
-    SORT,
     CURRENT_PAGE
 } from './actions_type';
 import axios from 'axios';
 
 export function getRecipes(queryParams) {
     let url = new URL('http://localhost:3001/recipes');
-    let queryArray = [];
     if (queryParams?.title) {
         url.searchParams.append("title", queryParams?.title);
     }
@@ -29,9 +27,10 @@ export function getRecipes(queryParams) {
 
     return async function (dispatch) {
         const response = await fetch(url);
+
         if (response.ok) {
             const json = await response.json();
-            dispatch({ type: GET_RECIPES, payload: json, query: queryParams});
+            dispatch({ type: GET_RECIPES, payload: json, query: queryParams });
         } else {
             dispatch({ type: REQUEST_ERROR, payload: 'There are no recipes with that name' });
         }
@@ -42,7 +41,6 @@ export function getRecipes(queryParams) {
 export function getRecipeDetail(id) {
     return async function (dispatch) {
         const response = await fetch(`http://localhost:3001/recipes/${id}`);
-        console.log("🚀 ~ file: index.js ~ line 45 ~ response", response)
         if (response.ok) {
             const json = await response.json();
             dispatch({ type: GET_RECIPE_DETAIL, payload: json });
@@ -51,8 +49,6 @@ export function getRecipeDetail(id) {
         }
     }
 }
-//TODO ver responde.error.text para enviar mensaje de error
-
 export function createRecipe(input) {
     return async function () {
         const resRecipe = await axios.post(`http://localhost:3001/recipes`, input);
@@ -75,7 +71,7 @@ export function getDiets() {
     }
 }
 
-export function filterByCreated (diet) {
+export function filterByCreated(diet) {
     return async function (dispatch) {
         const response = await fetch(`http://localhost:3001/recipes/?diet=${diet}`);
         const json = await response.json();

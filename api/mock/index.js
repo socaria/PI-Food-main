@@ -29,10 +29,10 @@ const getApiInfo = async () => {
                     })
                 }).flat(),
                 createdInDb: false,
-                diets: e.diets.map(d => { return {name: d} }),
+                diets: e.diets.map(d => { return { name: d } }),
                 image: e.image,
                 dishTypes: e.dishTypes
-            }; 
+            };
         });
     return apiInfo;
 };
@@ -75,30 +75,31 @@ router.get('/recipes', async (req, res) => {
             let recipeTitle = await recipesTotal.filter(
                 r => r.title.toLowerCase().includes(title.toLowerCase()));
 
-            recipeTitle.length
-                ? res.status(200).send(recipeTitle)
-                : res.status(404).send('No existen recetas con ese nombre');
-        } else {
-            res.status(200).send(recipesTotal);
+            if (recipeTitle.length === 0) {
+                throw new Error('here are not recipes with that name')
+
+            } else {
+                res.status(200).send(recipesTotal);
+            }
         }
-    } catch(e) {
-        console.log('ERRORRRRRRRRRRRRRRRRRRRRRRRR:', e);
+    } catch (e) {
+        res.status(404).send(e)
     }
 });
 
 router.get('/diets', async (req, res) => {
     const recipesTotal = await getAllRecipes();
-    
+
     const dietsTotal = recipesTotal.map(rt => {
         return rt.diets
-    }).flat();    
+    }).flat();
     dietsTotal.forEach(d => {
         Diet.findOrCreate({
             where: { name: d.name }
         })
     });
     const allDiets = await Diet.findAll();
-    console.log("🚀 ~ file: index.js ~ line 100 ~ router.get ~ allDiets", allDiets)
+
     res.send(allDiets);
 })
 

@@ -49,9 +49,10 @@ const RecipeDetail = (props) => {
                     </div>
                     <div className="create-recipe__div">
                         <h3 className="recipe-detail__title">Summary</h3>
-                        <p className="recipe-detail__summary" dangerouslySetInnerHTML={{ __html: recipeDetail?.summary && capitalizeFirstLetter(recipeDetail?.summary) }}></p>
+                        <p className="recipe-detail__summary" dangerouslySetInnerHTML={{
+                             __html: recipeDetail?.summary && capitalizeFirstLetter(recipeDetail?.summary.replaceAll(new RegExp(/<(?:a\b[^>]*>|\/a>)/g),""))
+                              }}></p>
                     </div>
-                    {console.log(recipeDetail?.instructions?.[0])}
                     {recipeDetail?.instructions?.[0] && recipeDetail?.instructions?.[0] !== "" &&
                         <div className="create-recipe__div">
                             <h3 className="recipe-detail__title">Steps</h3>
