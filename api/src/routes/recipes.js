@@ -70,7 +70,7 @@ router.get('/', async (req, res) => {
 
 
         }
-            res.status(200).send(recipesFiltered);
+        res.status(200).send(recipesFiltered);
 
     } catch (e) {
         res.status(404).send(e.message);
@@ -116,6 +116,7 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
+
     let recipeToDelete = await Recipe.findAll({
         where: { id: id }
     })
@@ -128,8 +129,49 @@ router.delete('/:id', async (req, res) => {
             });
     }
 
-    let recipesTotal = await Recipe.destroy({ where: { id: id } })
+    await Recipe.destroy({ where: { id: id } })
     res.send('done');
+})
+
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    let {
+        title,
+        summary,
+        healthScore,
+        image,
+        instructions,
+        diets
+    } = req.body;
+
+    try {
+        if(!id) { throw new Error('There is not recipes with this ID')}
+        if (!title) { throw new Error('title should be defined') }
+        if (!summary) { throw new Error('summary should be defined') }
+        let recipeToEdit = await Recipe.update(
+            {
+                title,
+                summary,
+                healthScore,
+                image,
+                instructions, 
+                
+            },
+            { where: { id: id } }
+        )
+        if (diets) {
+            let dietDb = await Diet.findAll({
+                where: { name: diets }
+            })
+            console.log("🚀 ~ file: recipes.js ~ line 165 ~ router.put ~ dietDb", dietDb)
+
+            recipeToEdit.addDiets(dietDb);
+        }
+        res.send('Recipe updated successfully');
+
+    } catch (e) {
+        res.status(500).send(`${e}`)
+    }
 })
 
 module.exports = router;
