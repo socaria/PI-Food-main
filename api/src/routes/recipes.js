@@ -105,9 +105,10 @@ router.post('/', async (req, res) => {
                 where: { name: diets }
             })
 
+            console.log("🚀 ~ file: recipes.js ~ line 109 ~ router.post ~ newRecipe", newRecipe)
             newRecipe.addDiets(dietDb);
         }
-        res.send('Recipe created successfully');
+        res.send(newRecipe);
 
     } catch (e) {
         res.status(500).send(`${e}`)
@@ -117,11 +118,10 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
-    let recipeToDelete = await Recipe.findAll({
-        where: { id: id }
-    })
+    let recipeToDelete = await Recipe.findByPk(id)
+    console.log("🚀 ~ file: recipes.js ~ line 122 ~ router.delete ~ recipeToDelete", recipeToDelete)
 
-    if (!recipeToDelete[0]) {
+    if (!recipeToDelete) {
         return res
             .status(404)
             .json({
@@ -135,7 +135,7 @@ router.delete('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    let {
+    const {
         title,
         summary,
         healthScore,
@@ -143,31 +143,32 @@ router.put('/:id', async (req, res) => {
         instructions,
         diets
     } = req.body;
-
+    let recipesTotal = await getAllRecipes();
+    let recipeId = await recipesTotal.filter(r => r.id == id)?.[0]
     try {
-        if(!id) { throw new Error('There is not recipes with this ID')}
+        if (!recipeId) { throw new Error('There is not recipes with this ID') }
         if (!title) { throw new Error('title should be defined') }
         if (!summary) { throw new Error('summary should be defined') }
-        let recipeToEdit = await Recipe.update(
+        let edited = await Recipe.upsert(
             {
+                id,
                 title,
                 summary,
                 healthScore,
                 image,
-                instructions, 
-                
-            },
-            { where: { id: id } }
+                instructions,
+                diets
+            }
         )
         if (diets) {
             let dietDb = await Diet.findAll({
                 where: { name: diets }
             })
-            console.log("🚀 ~ file: recipes.js ~ line 165 ~ router.put ~ dietDb", dietDb)
 
-            recipeToEdit.addDiets(dietDb);
+            edited[0].setDiets(dietDb);
         }
-        res.send('Recipe updated successfully');
+
+        res.send(edited);
 
     } catch (e) {
         res.status(500).send(`${e}`)
