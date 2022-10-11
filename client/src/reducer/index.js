@@ -6,7 +6,9 @@ import {
     REQUEST_ERROR,
     SORT,
     CURRENT_PAGE,
-    FILTER_BY_DIET
+    FILTER_BY_DIET,
+    EDIT_RECIPE,
+    DELETE_RECIPE
 } from '../actions/actions_type';
 
 const initialState = {
@@ -40,6 +42,16 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 recipeDetail: action.payload,
             }
+        case EDIT_RECIPE:
+            return {
+                ...state,
+                recipeDetail: action.payload
+            }
+        case DELETE_RECIPE:
+            return {
+                ...state,
+                recipes: action.payload
+            }
         case CREATE_RECIPE:
             return {
                 ...state
@@ -57,7 +69,7 @@ function rootReducer(state = initialState, action) {
         case FILTER_BY_DIET:
             return {
                 ...state,
-                recipes: state.recipes.filter(r => r.diets.find(d => d.name === action.payload)),
+                recipes: state.allRecipes.filter(r => r.diets.find(d => d.name === action.payload)),
                 queryParams: {...state.queryParams, diet: action.payload}
             }
 

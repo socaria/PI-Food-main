@@ -4,10 +4,11 @@ import {
     GET_RECIPE_DETAIL,
     FILTER_BY_DIET,
     GET_DIETS,
-    CURRENT_PAGE
+    CURRENT_PAGE,
+    DELETE_RECIPE, 
+    EDIT_RECIPE
 } from './actions_type';
 import axios from 'axios';
-import { bindActionCreators } from 'redux';
 
 export function getRecipes(queryParams) {
     let url = new URL('http://localhost:3001/recipes');
@@ -50,6 +51,30 @@ export function getRecipeDetail(id) {
         }
     }
 }
+
+export function deleteRecipe(id) {
+    return async function (dispatch) {
+        const response = await axios.delete(`http://localhost:3001/recipes/${id}`);
+        if (response.ok) {
+            const json = await response.data();
+            dispatch({ type: DELETE_RECIPE, payload: json });
+        } else {
+            dispatch({ type: REQUEST_ERROR, payload: 'There are no recipes with that ID' });
+        }
+    }
+}
+export function editRecipe(id, input) {
+    return async function (dispatch) {
+        const response = await axios.put(`http://localhost:3001/recipes/${id}`, input);
+        if (response.ok) {
+            const json = await response.data();
+            dispatch({ type: EDIT_RECIPE, payload: json });
+        } else {
+            dispatch({ type: REQUEST_ERROR, payload: 'There are no recipes with that ID' });
+        }
+    }
+}
+
 export function createRecipe(input) {
     return async function () {
         const resRecipe = await axios.post(`http://localhost:3001/recipes`, input);
@@ -80,11 +105,5 @@ export function getRecipesByDiet(diet) {
     }
 }
 
-// export function sortBy(payload) {
-//     return async function (dispatch) {
-//         const response = await fetch(`http://localhost:3001/recipes/?sortBy=${payload}`);
-//         const json = await response.json();
-//         dispatch({ type: SORT, payload: json });
-//     }
-// }
+
 

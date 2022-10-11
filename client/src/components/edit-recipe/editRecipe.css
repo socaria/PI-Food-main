@@ -1,0 +1,156 @@
+
+
+.edit-recipe__container {    
+    width: 500px;
+    margin: 102px auto 24px auto;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 10px;
+   
+}
+
+
+.edit-recipe__title {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-recipe__input-container {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-recipe__diets__container {
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 500px;
+    margin-top: 8px;
+}
+
+.edit-recipe__step-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between ;
+}
+
+.edit-recipe__input-textarea {
+    width: 100%;
+    margin-right: 8px;
+}
+
+.edit-recipe__button {
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 8px;
+    background-color: rgba(30,103,247,255);
+    color: white;
+    border-style: none;
+}
+
+
+.edit-recipe__step-delete {
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 8px;
+    background-color: rgba(30,103,247,255);
+    color: white;
+    border-style: none;
+}
+
+.edit-recipe__input {
+    background-color: white;
+    border-radius: 8px;
+    padding: 4px;
+    border-color: #ccc;
+}
+
+.edit-recipe__input--error {
+    border-color: red;
+}
+
+.edit-recipe__input-message-error{
+    margin: 0;
+    color: red;
+}
+
+.edit-recipe__delete-button {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    font-size: 11px;
+    padding: 8px;
+    border-radius: 10px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: rgba(30,103,247,255);
+    color:white;
+    margin: 4px;
+    border-style: none;
+}
+
+
+.edit-recipe__button {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    font-size: 11px;
+    padding: 8px;
+    border-radius: 10px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: rgba(30,103,247,255);
+    color:white;
+    margin: 4px;
+    border-style: none;
+}
+
+.edit-recipe__button--disabled {
+    background-color: #ccc;
+}
+
+.edit-recipe__button:hover {
+    background-color: rgba(30,150,247,255);
+    cursor:pointer;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+.edit-recipe__button--disabled:hover {
+    background-color: #ccc;
+    cursor: unset;
+    box-shadow: none;
+}
+
+.edit-recipe__delete-button{
+    position: relative;
+    display: flex;
+    width: fit-content;
+    font-size: 11px;
+    padding: 8px;
+    border-radius: 10px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: white;
+    color:rgba(0,83,191,255);
+    margin: 4px;
+    border-style: dashed;
+    border-color: rgba(0,83,191,255);
+
+}
+.edit-recipe__delete-button:hover {
+    background-color: rgba(30,150,247,255);
+    cursor:pointer;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+.edit-recipe__form-label{
+    font-size: larger;
+}
+
+.edit-recipe__add-step-button{
+    font-size: medium;
+}
+
+.edit-recipe__image-preview {
+    margin-top: 8px;
+    border-radius: 10px;
+}

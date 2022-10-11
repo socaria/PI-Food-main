@@ -8,4 +8,6 @@ export const SORT_BY_HEALTH_SCORE = 'SORT_BY_HEALTH_SCORE';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const SORT = 'SORT';
 export const CURRENT_PAGE = 'CURRENT_PAGE';
+export const DELETE_RECIPE = 'DELETE_RECIPE';
+export const EDIT_RECIPE = 'EDIT_RECIPE';
 
