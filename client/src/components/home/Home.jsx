@@ -75,7 +75,7 @@ export default function Home() {
                                         className="home__filter"
                                     >
                                         <option className="home__filter" value=''>Sort by...</option>
-                                        <option
+                                        <option className="home__filter"
                                             value='titleAsc'>
                                             Sort by name (A-Z)
                                         </option>
@@ -100,7 +100,7 @@ export default function Home() {
                                         {
                                             allDiets?.map(d => {
                                                 return (
-                                                    <option key={d.name} value={d.name}>{d.name}</option>
+                                                    <option className="home__filter" key={d.name} value={d.name}>{d.name}</option>
                                                 )
                                             })
                                         }
