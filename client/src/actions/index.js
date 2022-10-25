@@ -9,9 +9,14 @@ import {
     EDIT_RECIPE
 } from './actions_type';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const baseURL = process.env.REACT_APP_API || "http://localhost:3001"
 
 export function getRecipes(queryParams) {
-    let url = new URL('http://localhost:3001/recipes');
+    let url = new URL(`${baseURL}/recipes`);
     if (queryParams?.title) {
         url.searchParams.append("title", queryParams?.title);
     }
@@ -42,7 +47,7 @@ export function getRecipes(queryParams) {
 
 export function getRecipeDetail(id) {
     return async function (dispatch) {
-        const response = await fetch(`http://localhost:3001/recipes/${id}`);
+        const response = await fetch(`${baseURL}/recipes/${id}`);
         if (response.ok) {
             const json = await response.json();
             dispatch({ type: GET_RECIPE_DETAIL, payload: json });
@@ -54,7 +59,7 @@ export function getRecipeDetail(id) {
 
 export function deleteRecipe(id) {
     return async function (dispatch) {
-        const response = await axios.delete(`http://localhost:3001/recipes/${id}`);
+        const response = await axios.delete(`${baseURL}/recipes/${id}`);
         if (response.ok) {
             const json = await response.data();
             dispatch({ type: DELETE_RECIPE, payload: json });
@@ -65,7 +70,7 @@ export function deleteRecipe(id) {
 }
 export function editRecipe(id, input) {
     return async function (dispatch) {
-        const response = await axios.put(`http://localhost:3001/recipes/${id}`, input);
+        const response = await axios.put(`${baseURL}/recipes/${id}`, input);
         if (response.ok) {
             const json = await response.data();
             dispatch({ type: EDIT_RECIPE, payload: json });
@@ -77,7 +82,7 @@ export function editRecipe(id, input) {
 
 export function createRecipe(input) {
     return async function () {
-        const resRecipe = await axios.post(`http://localhost:3001/recipes`, input);
+        const resRecipe = await axios.post(`${baseURL}/recipes`, input);
         return resRecipe;
     }
 }
@@ -91,7 +96,7 @@ export function getCurrentPage(pageNumber) {
 
 export function getDiets() {
     return async function (dispatch) {
-        const response = await fetch(`http://localhost:3001/diets`);
+        const response = await fetch(`${baseURL}/diets`);
         const json = await response.json();
         dispatch({ type: GET_DIETS, payload: json });
     }
