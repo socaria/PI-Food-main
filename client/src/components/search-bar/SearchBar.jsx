@@ -5,7 +5,6 @@ import './searchBar.css';
 import img from '../../image/logo2.png';
 import { Link } from "react-router-dom"
 
-
 export default function SearchBar({ isSearchVisible }) {
     const dispatch = useDispatch();
     const [input, setInput] = useState('');

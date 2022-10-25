@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './landingPage.css'
+import img from '../../image/03.webp';
 
 export default function LandingPage() {
     return (
         <div className='landing-page'>
-            <h1 className='landing-page__title'>MyRecipes</h1>
             <Link to='/home' className='landing-page__link-to'>
-                <button className='landing-page__login-button'>Start</button>
+                <img className="landing-page__image" src={img} alt='img' />
+                <h1 className='landing-page__text'>start here !</h1>
             </Link>
         </div>
     )
