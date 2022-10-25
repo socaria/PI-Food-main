@@ -43,7 +43,7 @@ describe("<RecipeCard />", () => {
 
   describe("Estructura", () => {
     it('Debería renderizar un tag "h3" que muestre lo que contiene el "title" de cada "recipe"', () => {
-      expect(recipeCard(recipes[0]).find("h3").at(0).text()).toBe("Cauliflower, Brown Rice, and Vegetable Fried Rice");
+      expect(recipeCard(recipes[0]).find("h3").at(0).text()).toBe("Cauliflower, Brown Rice, and Veggetable Fried Rice");
       expect(recipeCard(recipes[1]).find("h3").at(0).text()).toBe("Homemade Garlic and Basil French Fries");
       expect(recipeCard(recipes[2]).find("h3").at(0).text()).toBe("Berry Banana Breakfast Smoothie"
       );

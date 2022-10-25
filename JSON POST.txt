@@ -3,7 +3,7 @@
 "summary": "pollo", 
 "healthScore": 0, 
 "instructions": "pollo", 
-"diets": ["lacto ovo vegetarian", "paleolithic", "primal"]
+"diets": ["lacto ovo veggetarian", "paleolithic", "primal"]
 }
 
 paso: ${as.number},  
