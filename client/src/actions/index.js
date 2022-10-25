@@ -6,7 +6,8 @@ import {
     GET_DIETS,
     CURRENT_PAGE,
     DELETE_RECIPE, 
-    EDIT_RECIPE
+    EDIT_RECIPE,
+    GET_RECIPES_LOADING
 } from './actions_type';
 import axios from 'axios';
 import dotenv from 'dotenv';
@@ -33,6 +34,8 @@ export function getRecipes(queryParams) {
 
 
     return async function (dispatch) {
+        dispatch({ type: GET_RECIPES_LOADING });
+
         const response = await fetch(url);
 
         if (response.ok) {
@@ -47,6 +50,7 @@ export function getRecipes(queryParams) {
 
 export function getRecipeDetail(id) {
     return async function (dispatch) {
+    dispatch({ type: GET_RECIPES_LOADING });
         const response = await fetch(`${baseURL}/recipes/${id}`);
         if (response.ok) {
             const json = await response.json();

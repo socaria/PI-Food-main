@@ -79,6 +79,14 @@
     margin: 4px;
 }
 
+.loading-spinner__container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
 .recipe-detail__container {
     width: 500px;
     margin: 102px auto 24px auto;
@@ -124,3 +132,4 @@
     display: flex;
     justify-content: flex-end;
 }
+

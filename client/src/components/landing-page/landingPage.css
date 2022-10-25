@@ -1,6 +1,5 @@
 .landing-page {
   background: linear-gradient(to right, rgba(77, 73, 69, 255), black);
-
   display: flex;
   align-items: center;
   height: 100vh;
