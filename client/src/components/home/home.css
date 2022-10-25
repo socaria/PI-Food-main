@@ -39,6 +39,8 @@
 .home__filter {
   border-radius: 10px;
   margin-right: 8px;
+  text-transform: capitalize;
+  padding-left: 4px;
 }
 
 .home-filters__container {
