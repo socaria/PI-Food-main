@@ -11,7 +11,7 @@ const RecipeCard = (props) => {
 
   return (
     <div className="recipe-card__container">
-      <Link to={`/recipes/${props.id}`}>
+      <Link className="recipe-card__link" to={`/recipes/${props.id}`}>
         <div className="recipe-card__image-container">
           <img
             src={props?.image || img}

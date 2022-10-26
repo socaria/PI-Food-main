@@ -133,9 +133,9 @@
 }
 
 .create-recipe__button:hover {
-    background-color: rgba(30,150,247,255);
-    cursor:pointer;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    background-color: white;
+    color: rgb(33, 19, 13);
+    box-shadow: 0px 0px 8px 0px rgb(0 0 0 / 75%);
 }
 .create-recipe__button--disabled:hover {
     background-color: #ccc;
@@ -159,7 +159,8 @@
 
 }
 .create-recipe__delete-button:hover {
-    background-color: rgba(30,150,247,255);
+    background-color: rgb(33, 19, 13);
+    color: white;
     cursor:pointer;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 }

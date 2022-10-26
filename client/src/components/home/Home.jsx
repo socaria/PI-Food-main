@@ -58,7 +58,7 @@ export default function Home() {
     }
 
     return (
-        <>
+        <div class>
             <SearchBar isSearchVisible />
             <div className="home__container">
                 {isRecipiesLoading
@@ -144,6 +144,6 @@ export default function Home() {
                         )
                 }
             </div>
-        </>
+        </div>
     )
 }
