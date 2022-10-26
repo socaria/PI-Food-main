@@ -84,10 +84,10 @@ export default function Home() {
                                             Sort by name (Z-A)
                                         </option>
                                         <option value='healthScoreAsc'>
-                                            Sort by health score (🢁)
+                                            Sort by health score (0-100)
                                         </option>
                                         <option value='healthScoreDesc'>
-                                            Sort by health score (🡻)
+                                            Sort by health score (100-0)
                                         </option>
                                     </select>
                                     <select
